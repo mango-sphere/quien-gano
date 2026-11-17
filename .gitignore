@@ -1,0 +1,6 @@
+__pycache__/
+*.pyc
+.venv/
+
+# Datos generados por el scraper (se regeneran con `uv run src/main.py`)
+data/
