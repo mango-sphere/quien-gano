@@ -1,9 +1,12 @@
 /**
  * Convierte la salida del scraper (`data/2026-erm/resumen-1ra-vuelta.json`) al
- * contrato de datos del handoff y copia los logos que se usan a `public/logos/`.
+ * contrato de datos del handoff y copia los logos y fotos que se usan a `public/`.
+ *
+ * Las fotos se publican con un hash del DNI como nombre, para no exponer el DNI en la URL.
  *
  * Uso: `npm run sincronizar-datos` (requiere haber corrido el scraper)
  */
+import { createHash } from "node:crypto";
 import { copyFileSync, existsSync, mkdirSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
@@ -14,6 +17,7 @@ type ParticipanteScraper = {
   codigo: string;
   organizacion: string;
   candidato: string | null;
+  dni: string | null;
   porcentaje_validos: number;
 };
 type RankingScraper = Record<string, ParticipanteScraper>;
@@ -37,6 +41,7 @@ const ORIGEN = join(RAIZ, "..", "data", "2026-erm");
 const HANDOFF_LOGOS = join(RAIZ, "..", "quien-gano-handoff", "assets", "logos");
 const DESTINO_DATOS = join(RAIZ, "src", "data");
 const DESTINO_LOGOS = join(RAIZ, "public", "logos");
+const DESTINO_FOTOS = join(RAIZ, "public", "fotos");
 
 /** Logos ya recortados y limpios del handoff, por código de organización ONPE. */
 const LOGOS_LIMPIOS: Record<string, string> = {
@@ -66,12 +71,23 @@ function nombrePartido(organizacion: string): string {
     .join(" - ");
 }
 
+/** Copia la foto del candidato a `public/fotos/` y devuelve su URL, o `undefined` si no hay foto. */
+function publicarFoto(dni: string | null): string | undefined {
+  if (!dni) return undefined;
+  const origen = join(ORIGEN, "fotos", `${dni}.jpg`);
+  if (!existsSync(origen)) return undefined;
+  const nombre = `${createHash("sha256").update(dni).digest("hex").slice(0, 16)}.jpg`;
+  copyFileSync(origen, join(DESTINO_FOTOS, nombre));
+  return `/fotos/${nombre}`;
+}
+
 function candidato(p: ParticipanteScraper): Candidato {
   return {
     name: p.candidato ? aTitulo(p.candidato) : "Candidato no informado",
     party: nombrePartido(p.organizacion),
     pct: p.porcentaje_validos.toFixed(1),
     logo: `/logos/${p.codigo}.png`,
+    photo: publicarFoto(p.dni),
   };
 }
 
@@ -98,6 +114,10 @@ function copiarLogo(codigo: string): void {
 
 function main(): void {
   const reporte: ReporteScraper = JSON.parse(readFileSync(join(ORIGEN, "resumen-1ra-vuelta.json"), "utf-8"));
+  for (const carpeta of [DESTINO_LOGOS, DESTINO_FOTOS]) {
+    rmSync(carpeta, { recursive: true, force: true });
+    mkdirSync(carpeta, { recursive: true });
+  }
   const resultados: Resultados = {};
   const codigos = new Set<string>();
 
@@ -126,11 +146,12 @@ function main(): void {
   writeFileSync(join(DESTINO_DATOS, "resultados.json"), JSON.stringify(resultados));
   writeFileSync(join(DESTINO_DATOS, "meta.json"), JSON.stringify(meta, null, 2));
 
-  rmSync(DESTINO_LOGOS, { recursive: true, force: true });
-  mkdirSync(DESTINO_LOGOS, { recursive: true });
   codigos.forEach(copiarLogo);
 
-  console.log(`${Object.keys(resultados).length} resultados y ${codigos.size} logos sincronizados.`);
+  const conFoto = Object.values(resultados).flatMap((r) => [r.a, r.b]).filter((c) => c?.photo).length;
+  console.log(
+    `${Object.keys(resultados).length} resultados, ${codigos.size} logos y ${conFoto} candidatos con foto sincronizados.`,
+  );
 }
 
 main();

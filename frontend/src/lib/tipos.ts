@@ -12,6 +12,8 @@ export type Candidato = {
   /** Porcentaje de votos válidos con 1 decimal, p. ej. `"34.2"`. */
   pct: string;
   logo?: string;
+  /** Agregado al contrato del handoff: foto del candidato. Sin ella se muestra el marcador "FOTO". */
+  photo?: string;
 };
 
 export type Resultado = {

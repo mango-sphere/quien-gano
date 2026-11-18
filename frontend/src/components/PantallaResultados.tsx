@@ -6,7 +6,6 @@ import { normalizar, pluralizar } from "@/lib/texto";
 import type { Fila, RegionMapa, Vista } from "@/lib/vista";
 
 import { BoletaResultado } from "./BoletaResultado";
-import { Casilla } from "./Casilla";
 import { FiltroEstado, SelectorOrden, type Filtro, type Orden } from "./Controles";
 import { Encabezado } from "./Encabezado";
 import { MigasDePan } from "./MigasDePan";
@@ -92,22 +91,10 @@ export function PantallaResultados({ vista, regionesMapa, estadoDatos }: Props) 
           <SelectorOrden valor={orden} onCambiar={setOrden} />
         </div>
 
-        <ul className={styles.leyenda}>
-          <li>
-            <Casilla marcada tamano={24} />
-            Logo marcado: ganó
-          </li>
-          <li>
-            <Casilla marcada={false} tamano={24} />
-            <Casilla marcada={false} tamano={24} />
-            Dos casillas sin marcar: segunda vuelta
-          </li>
-        </ul>
-
         {visibles.length > 0 ? (
           <ol className={styles.lista}>
             {visibles.map((f, i) => (
-              <li key={f.lugar}>
+              <li key={f.lugar} className={styles.elemento}>
                 <BoletaResultado {...f} variante="fila" numero={i + 1} />
               </li>
             ))}

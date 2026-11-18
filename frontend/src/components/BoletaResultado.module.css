@@ -116,6 +116,7 @@
 }
 
 .ganador {
+  flex: 1;
   display: flex;
   flex-wrap: wrap;
   align-items: center;
@@ -174,6 +175,7 @@
 }
 
 .dosColumnas {
+  flex: 1;
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
 }

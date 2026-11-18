@@ -8,7 +8,7 @@ import type { Candidato } from "@/lib/tipos";
 import type { Fila } from "@/lib/vista";
 
 import styles from "./BoletaResultado.module.css";
-import { Casilla } from "./Casilla";
+import { Retrato, type TamanoRetrato } from "./Retrato";
 
 type Props = Fila &
   (
@@ -17,9 +17,11 @@ type Props = Fila &
   );
 
 const TAMANOS = {
-  fila: { casilla: 84, nombre: styles.nombreFila, pct: styles.pctFila },
-  destacada: { casilla: 120, nombre: styles.nombreDestacada, pct: styles.pctDestacada },
+  fila: { retrato: { foto: 84, logo: 46 }, nombre: styles.nombreFila, pct: styles.pctFila },
+  destacada: { retrato: { foto: 120, logo: 60 }, nombre: styles.nombreDestacada, pct: styles.pctDestacada },
 };
+
+const RETRATO_FINALISTA: TamanoRetrato = { foto: 68, logo: 38 };
 
 export function BoletaResultado(props: Props) {
   const { lugar, resultado, segundaVuelta, enlace, variante } = props;
@@ -86,10 +88,10 @@ function EtiquetaEstado({ segundaVuelta }: { segundaVuelta: boolean }) {
   );
 }
 
-function Ganador({ candidato, casilla, nombre, pct }: { candidato: Candidato } & (typeof TAMANOS)["fila"]) {
+function Ganador({ candidato, retrato, nombre, pct }: { candidato: Candidato } & (typeof TAMANOS)["fila"]) {
   return (
     <div className={styles.ganador}>
-      <Casilla candidato={candidato} marcada tamano={casilla} />
+      <Retrato candidato={candidato} tamano={retrato} />
       <div className={styles.persona}>
         <span className={nombre}>{candidato.name}</span>
         <span className={styles.partido}>{candidato.party}</span>
@@ -117,7 +119,7 @@ function SegundaVuelta({ a, b }: { a: Candidato; b: Candidato }) {
 function Finalista({ candidato, lado }: { candidato: Candidato; lado: "izquierda" | "derecha" }) {
   return (
     <div className={`${styles.finalista} ${styles[lado]}`}>
-      <Casilla candidato={candidato} marcada={false} tamano={62} />
+      <Retrato candidato={candidato} tamano={RETRATO_FINALISTA} />
       <span className={styles.pctFinalista}>{candidato.pct}%</span>
       <span className={styles.nombreFinalista}>{candidato.name}</span>
       <span className={styles.partidoFinalista}>{candidato.party}</span>
