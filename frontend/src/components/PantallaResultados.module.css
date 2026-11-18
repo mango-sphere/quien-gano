@@ -1,0 +1,72 @@
+.principal {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+  max-width: var(--ancho-max);
+  margin: 0 auto;
+  padding: clamp(20px, 3vw, 32px) var(--margen-lateral) 72px;
+}
+
+.ubicacion {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.titulo {
+  font-weight: 800;
+  font-size: clamp(31px, 4.7vw, 50px);
+  line-height: 0.95;
+}
+
+.cabeceraLista {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  margin-top: 6px;
+}
+
+.tituloLista {
+  font-weight: 700;
+  font-size: 22px;
+}
+
+.cantidad {
+  color: var(--texto-3);
+  font-weight: 600;
+  font-size: 20px;
+}
+
+.leyenda {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px 22px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-size: 13px;
+  color: var(--texto-2);
+}
+
+.leyenda li {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.lista {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 520px), 1fr));
+  gap: 14px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.vacio {
+  font-size: 16px;
+  color: var(--texto-2);
+}

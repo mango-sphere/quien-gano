@@ -1,0 +1,117 @@
+.mapa {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 524 / 756;
+}
+
+.definiciones {
+  position: absolute;
+}
+
+.region {
+  position: absolute;
+  inset: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: none;
+  pointer-events: none;
+}
+
+.region:focus-visible {
+  outline: none;
+}
+
+.lienzo {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.trazo {
+  pointer-events: visiblePainted;
+  cursor: pointer;
+  stroke: var(--mapa-borde);
+  stroke-width: 1.3;
+  stroke-linejoin: round;
+  transition: fill-opacity 0.15s;
+}
+
+.capaRealce {
+  pointer-events: none;
+}
+
+.realce {
+  fill: none;
+  stroke-linejoin: round;
+}
+
+.trazoEnfocado {
+  stroke: var(--amarillo);
+  stroke-width: 3;
+}
+
+.trazoElegido {
+  stroke: var(--amarillo);
+  stroke-width: 5;
+}
+
+.marca {
+  position: absolute;
+  width: 7.2%;
+  aspect-ratio: 1;
+  transform: translate(-50%, -50%);
+  overflow: hidden;
+  border-radius: 6px;
+  background: #fff;
+  box-shadow: 0 2px 6px #00386b3a;
+  pointer-events: none;
+}
+
+.globo {
+  position: absolute;
+  transform: translate(-50%, calc(-100% - 18px));
+  pointer-events: none;
+}
+
+.globoCaja {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 12px 8px 8px;
+  border: 1.5px solid var(--marino);
+  border-radius: 12px;
+  background: #fff;
+  color: var(--marino);
+  white-space: nowrap;
+  box-shadow: 0 8px 20px #00386b40;
+}
+
+.globoLogo {
+  position: relative;
+  flex: none;
+  width: 40px;
+  height: 40px;
+  overflow: hidden;
+  border: 1px solid var(--borde-logo);
+  border-radius: 8px;
+}
+
+.globoTextos {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.globoNombre {
+  font-weight: 800;
+  font-size: 15px;
+  line-height: 1;
+}
+
+.globoDetalle {
+  font-size: 12px;
+  font-weight: 600;
+}
