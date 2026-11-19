@@ -23,7 +23,8 @@ class Participante:
     """Una organización política y su candidato, con sus votos en un ámbito.
 
     ``candidato``, ``dni`` y ``url_foto`` son ``None`` cuando la ONPE no informa
-    al candidato (pasa con algunas listas que igual tienen votos).
+    al candidato (pasa con algunas listas que igual tienen votos). En ese caso,
+    ``estado_jne`` dice por qué según el JNE (p. ej. ``"RENUNCIA"`` o ``"EXCLUSION"``).
     """
 
     codigo: str
@@ -34,6 +35,7 @@ class Participante:
     porcentaje_validos: float
     url_logo: str
     url_foto: str | None
+    estado_jne: str | None = None
 
     @classmethod
     def from_api(cls, raw: dict[str, Any]) -> Self:

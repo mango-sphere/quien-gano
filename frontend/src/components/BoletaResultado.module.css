@@ -146,6 +146,12 @@
   font-size: 24px;
 }
 
+.motivo {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--vuelta-texto);
+}
+
 .partido {
   color: var(--texto-3);
   font-size: 13px;

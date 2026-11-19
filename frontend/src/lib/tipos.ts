@@ -14,6 +14,8 @@ export type Candidato = {
   logo?: string;
   /** Agregado al contrato del handoff: foto del candidato. Sin ella se muestra el marcador "FOTO". */
   photo?: string;
+  /** Agregado al contrato del handoff: por qué no hay candidato con nombre (según el JNE). */
+  reason?: string;
 };
 
 export type Resultado = {

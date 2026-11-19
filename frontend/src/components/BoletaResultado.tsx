@@ -94,6 +94,7 @@ function Ganador({ candidato, retrato, nombre, pct }: { candidato: Candidato } &
       <Retrato candidato={candidato} tamano={retrato} />
       <div className={styles.persona}>
         <span className={nombre}>{candidato.name}</span>
+        {candidato.reason && <span className={styles.motivo}>{candidato.reason}</span>}
         <span className={styles.partido}>{candidato.party}</span>
       </div>
       <span className={`${styles.pct} ${pct}`}>
@@ -122,6 +123,7 @@ function Finalista({ candidato, lado }: { candidato: Candidato; lado: "izquierda
       <Retrato candidato={candidato} tamano={RETRATO_FINALISTA} />
       <span className={styles.pctFinalista}>{candidato.pct}%</span>
       <span className={styles.nombreFinalista}>{candidato.name}</span>
+      {candidato.reason && <span className={styles.motivo}>{candidato.reason}</span>}
       <span className={styles.partidoFinalista}>{candidato.party}</span>
     </div>
   );

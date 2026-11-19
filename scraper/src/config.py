@@ -22,6 +22,12 @@ URL_LOGO_PARTIDO = f"{BASE_URL}/assets/img-reales/partidos/{{codigo}}.png"
 # Fotos (JNE Voto Informado, blob público): el archivo se llama como el DNI del candidato.
 URL_FOTO_CANDIDATO = "https://stovotoinformadodev.blob.core.windows.net/contenedor-1/{dni}.jpg"
 
+# --- JNE Voto Informado (sin WAF) ---
+# Se consulta solo para las listas que la ONPE trae sin candidato, para saber el motivo.
+JNE_API_URL = "https://votoinformado.jne.gob.pe/api/v1"
+JNE_ENDPOINT_ORGANIZACIONES = "candidatos/organizaciones"
+JNE_ENDPOINT_CANDIDATOS = "candidatos/organizaciones/candidatos"
+
 # --- Parámetros de la API ---
 # Cada elección tiene su id; los listados de ubigeos también se filtran por él
 # (p. ej. con la distrital no aparecen los distritos capitales, que no eligen alcalde distrital).
@@ -45,6 +51,11 @@ PAUSA_ENTRE_CONSULTAS_S = 0.5
 # Fotos: blob estático del JNE, sin WAF.
 CONCURRENCIA_FOTOS = 8
 TIMEOUT_FOTOS_S = 20.0
+# JNE: responde 429 ante ráfagas en paralelo; con 2 a la vez y una pausa corta no se queja.
+CONCURRENCIA_JNE = 2
+PAUSA_JNE_S = 0.25
+REINTENTOS_JNE = 5
+TIMEOUT_JNE_S = 20.0
 
 # --- Salida ---
 REPO_ROOT = Path(__file__).resolve().parents[2]  # quien-gano/

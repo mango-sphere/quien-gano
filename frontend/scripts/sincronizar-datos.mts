@@ -18,6 +18,7 @@ type ParticipanteScraper = {
   organizacion: string;
   candidato: string | null;
   dni: string | null;
+  estado_jne?: string | null;
   porcentaje_validos: number;
 };
 type RankingScraper = Record<string, ParticipanteScraper>;
@@ -81,9 +82,28 @@ function publicarFoto(dni: string | null): string | undefined {
   return `/fotos/${nombre}`;
 }
 
+/**
+ * Estado del candidato en el JNE → texto para la tarjeta. `INSCRITO` no explica por qué la ONPE
+ * no trae el nombre, así que no se muestra como motivo.
+ */
+const MOTIVOS_JNE: Record<string, string> = {
+  RENUNCIA: "Renunció a la candidatura",
+  EXCLUSION: "Fue excluido de la elección",
+  IMPROCEDENTE: "Su inscripción no fue aceptada",
+  TACHADO: "Su candidatura fue tachada",
+  RETIRO: "Su candidatura fue retirada",
+  FALLECIDO: "Falleció",
+};
+
+function nombreYMotivo(p: ParticipanteScraper): Pick<Candidato, "name" | "reason"> {
+  if (p.candidato) return { name: aTitulo(p.candidato) };
+  const motivo = p.estado_jne ? MOTIVOS_JNE[p.estado_jne] : undefined;
+  return motivo ? { name: "Sin candidato a alcalde", reason: motivo } : { name: "Candidato no informado" };
+}
+
 function candidato(p: ParticipanteScraper): Candidato {
   return {
-    name: p.candidato ? aTitulo(p.candidato) : "Candidato no informado",
+    ...nombreYMotivo(p),
     party: nombrePartido(p.organizacion),
     pct: p.porcentaje_validos.toFixed(1),
     logo: `/logos/${p.codigo}.png`,

@@ -9,6 +9,7 @@ import config
 from analisis import aplanar
 from client import OnpeClient
 from fotos import descargar_fotos
+from jne import completar_estados
 from logos import descargar_logos
 from models import Region, ReporteProceso
 from resultados import construir_region, listar_regiones
@@ -70,19 +71,21 @@ def _scrapear(inicio: datetime) -> None:
         logger.success("Resultados guardados en {}", config.PROCESO_DIR)
         logos_fallidos = descargar_logos(client, reporte.regiones)
 
-    # Las fotos vienen de un blob público del JNE: no necesitan el navegador.
+    # El JNE no tiene WAF: el motivo de las listas sin candidato y las fotos no necesitan el navegador.
+    reporte = completar_estados(reporte)
+    guardar(reporte)
     fotos_fallidas = descargar_fotos(reporte.regiones)
 
-    for fallo in fallidos:
+    for fallo in reporte.fallidos:
         logger.warning("Faltante: {}", fallo)
     if logos_fallidos:
         logger.warning("{} logos no se pudieron descargar: {}", len(logos_fallidos), ", ".join(logos_fallidos))
     if fotos_fallidas:
         logger.warning("{} fotos no se pudieron descargar: {}", len(fotos_fallidas), ", ".join(fotos_fallidas))
-    if fallidos or logos_fallidos or fotos_fallidas:
+    if reporte.fallidos or logos_fallidos or fotos_fallidas:
         logger.warning(
             "Terminó con {} ámbitos, {} logos y {} fotos faltantes",
-            len(fallidos), len(logos_fallidos), len(fotos_fallidas),
+            len(reporte.fallidos), len(logos_fallidos), len(fotos_fallidas),
         )
     else:
         logger.success("Todo completo")

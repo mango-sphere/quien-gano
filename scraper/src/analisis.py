@@ -29,6 +29,7 @@ ESQUEMA = {
     "organizacion": pl.String,
     "candidato": pl.String,
     "dni": pl.String,
+    "estado_jne": pl.String,
     "votos": pl.Int64,
     "porcentaje_validos": pl.Float64,
 }
@@ -58,6 +59,7 @@ def _filas_ranking(
             "organizacion": participante["organizacion"],
             "candidato": participante["candidato"],
             "dni": participante["dni"],
+            "estado_jne": participante.get("estado_jne"),
             "votos": participante["votos"],
             "porcentaje_validos": participante["porcentaje_validos"],
         }
