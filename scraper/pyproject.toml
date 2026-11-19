@@ -1,0 +1,28 @@
+[project]
+name = "scraper"
+version = "0.1.0"
+description = "Scraper de resultados de las ERM 2026 (ONPE) completados con datos del JNE"
+readme = "README.md"
+authors = [
+    { name = "mardecode", email = "mardecode@gmail.com" }
+]
+requires-python = ">=3.13"
+dependencies = [
+    "httpx>=0.28.1",
+    "loguru>=0.8.0",
+    "playwright>=1.65.2",
+    "polars>=2.1.0",
+]
+
+[dependency-groups]
+dev = [
+    "ruff==0.17.5",
+]
+
+[tool.ruff]
+line-length = 120
+target-version = "py313"
+
+[tool.ruff.lint]
+# E/F: errores y pyflakes · I: orden de imports · UP: sintaxis moderna · B: bugs comunes · SIM: simplificaciones
+select = ["E", "F", "I", "UP", "B", "SIM"]

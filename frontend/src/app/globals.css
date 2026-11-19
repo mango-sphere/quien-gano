@@ -1,0 +1,92 @@
+:root {
+  --marino: #00386b;
+  --azul: #2f6fb8;
+  --azul-texto: #1f4d82;
+  --amarillo: #ffc83d;
+  --verde-datos: #7ee0a0;
+
+  --fondo: #eaf1fa;
+  --superficie: #ffffff;
+  --superficie-suave: #f1f6fc;
+  --celeste: #e3edf8;
+  --borde-suave: #d6e2f0;
+
+  --texto-2: #3d4f66;
+  --texto-3: #4a5b70;
+  --texto-4: #56677d;
+
+  --ganador-fondo: #bff0d0;
+  --ganador-texto: #0d5b2c;
+  --vuelta-fondo: #ffd966;
+  --vuelta-texto: #6b4500;
+
+  --mapa-borde: #1d4f86;
+  --mapa-rayado: #6f93c4;
+
+  --ancho-max: 1320px;
+  --margen-lateral: clamp(16px, 4vw, 40px);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: var(--fuente-base), system-ui, sans-serif;
+  color: var(--marino);
+  background: var(--fondo);
+}
+
+h1,
+h2,
+h3,
+h4,
+p {
+  margin: 0;
+}
+
+button,
+input {
+  font: inherit;
+}
+
+a {
+  color: var(--marino);
+}
+
+a:hover {
+  color: #000;
+}
+
+:focus-visible {
+  outline: 3px solid var(--marino);
+  outline-offset: 2px;
+}
+
+.visualmente-oculto {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    transition: none !important;
+  }
+}
