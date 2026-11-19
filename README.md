@@ -41,6 +41,21 @@ cd ../frontend
 npm run sincronizar-datos
 ```
 
+## Integración y despliegue
+
+Con GitHub Actions (`.github/workflows/`):
+
+| Workflow | Cuándo | Qué hace |
+|---|---|---|
+| `ci.yml` | Pull request hacia `develop` | Scraper: Ruff (lint y formato). Frontend: ESLint y `next build` (incluye tipos). Solo corre la parte que cambió. |
+| `deploy.yml` | Push a `main` (o a mano) | Construye el frontend y lo publica en GitHub Pages. |
+
+Flujo de ramas: `feat/*` → PR a `develop` → PR a `main` (publica).
+
+Para que el deploy funcione, en *Settings → Pages* del repositorio la fuente debe ser **GitHub Actions**.
+Para usar un subdominio, configúralo en esa misma pantalla y crea en tu DNS un registro `CNAME` que
+apunte a `<usuario>.github.io`.
+
 ## Datos y fuentes
 
 Toda la información viene de **fuentes públicas y oficiales del Estado peruano**:
