@@ -39,17 +39,11 @@ type ReporteScraper = {
 
 const RAIZ = join(dirname(fileURLToPath(import.meta.url)), "..");
 const ORIGEN = join(RAIZ, "..", "data", "2026-erm");
-const HANDOFF_LOGOS = join(RAIZ, "..", "quien-gano-handoff", "assets", "logos");
+/** Logos recortados y limpios (vinieron con el diseño), con el código ONPE como nombre; tienen prioridad. */
+const LOGOS_LIMPIOS = join(RAIZ, "scripts", "logos-limpios");
 const DESTINO_DATOS = join(RAIZ, "src", "data");
 const DESTINO_LOGOS = join(RAIZ, "public", "logos");
 const DESTINO_FOTOS = join(RAIZ, "public", "fotos");
-
-/** Logos ya recortados y limpios del handoff, por código de organización ONPE. */
-const LOGOS_LIMPIOS: Record<string, string> = {
-  "95": "app.png",
-  "123": "ahora-nacion.png",
-  "137": "renovacion-popular.png",
-};
 
 const PARTICULAS = new Set(["a", "al", "con", "de", "del", "e", "el", "en", "la", "las", "los", "para", "por", "y"]);
 
@@ -122,10 +116,8 @@ function resultado(ranking: RankingScraper, ambito: string): Resultado | null {
 
 function copiarLogo(codigo: string): void {
   const destino = join(DESTINO_LOGOS, `${codigo}.png`);
-  const limpio = LOGOS_LIMPIOS[codigo];
-  const origen = limpio
-    ? join(HANDOFF_LOGOS, limpio)
-    : join(ORIGEN, "logos", `${codigo.padStart(8, "0")}.png`);
+  const limpio = join(LOGOS_LIMPIOS, `${codigo}.png`);
+  const origen = existsSync(limpio) ? limpio : join(ORIGEN, "logos", `${codigo.padStart(8, "0")}.png`);
   if (!existsSync(origen)) {
     throw new Error(`Falta el logo de la organización ${codigo}: ${origen}`);
   }

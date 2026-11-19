@@ -39,9 +39,3 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
-
-# generados por `npm run sincronizar-datos` a partir de la salida del scraper
-/src/data/resultados.json
-/src/data/meta.json
-/public/logos/
-/public/fotos/
