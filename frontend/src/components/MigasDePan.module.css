@@ -1,0 +1,29 @@
+.migas {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+}
+
+.separador {
+  color: var(--texto-4);
+}
+
+.enlace,
+.actual {
+  display: inline-flex;
+  align-items: center;
+  min-height: 40px;
+}
+
+.enlace {
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.actual {
+  font-weight: 700;
+  color: var(--texto-2);
+}

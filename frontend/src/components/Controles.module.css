@@ -1,0 +1,64 @@
+.filtro {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  padding: 4px;
+  border-radius: 99px;
+  background: var(--celeste);
+}
+
+.opcionFiltro,
+.opcionOrden {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 42px;
+  padding: 9px 16px;
+  border-radius: 99px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  color: var(--marino);
+}
+
+.opcionFiltro {
+  border: 0;
+  background: transparent;
+}
+
+.opcionOrden {
+  border: 1.5px solid var(--marino);
+  background: var(--superficie);
+}
+
+.opcionFiltro[aria-pressed="true"],
+.opcionOrden[aria-pressed="true"] {
+  background: var(--marino);
+  color: #fff;
+}
+
+.conteo {
+  min-width: 14px;
+  padding: 0 8px;
+  border-radius: 99px;
+  background: var(--superficie);
+  color: var(--marino);
+  font-size: 13px;
+  font-weight: 800;
+  text-align: center;
+}
+
+.orden {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+}
+
+.etiquetaOrden {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--texto-2);
+}

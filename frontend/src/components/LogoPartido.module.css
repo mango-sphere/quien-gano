@@ -1,0 +1,16 @@
+.logo {
+  position: absolute;
+  inset: 7%;
+  display: grid;
+  place-items: center;
+}
+
+.imagen {
+  object-fit: contain;
+}
+
+.sigla {
+  font-weight: 800;
+  line-height: 1;
+  color: var(--marino);
+}

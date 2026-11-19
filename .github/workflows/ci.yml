@@ -1,0 +1,68 @@
+name: CI
+
+on:
+  pull_request:
+    branches: [develop]
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  cambios:
+    name: Detectar cambios
+    runs-on: ubuntu-latest
+    permissions:
+      pull-requests: read
+    outputs:
+      scraper: ${{ steps.filtro.outputs.scraper }}
+      frontend: ${{ steps.filtro.outputs.frontend }}
+    steps:
+      - uses: dorny/paths-filter@v3
+        id: filtro
+        with:
+          filters: |
+            scraper:
+              - 'scraper/**'
+              - '.github/workflows/ci.yml'
+            frontend:
+              - 'frontend/**'
+              - '.github/workflows/ci.yml'
+
+  scraper:
+    name: Scraper · lint (Ruff)
+    needs: cambios
+    if: needs.cambios.outputs.scraper == 'true'
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: scraper
+    steps:
+      - uses: actions/checkout@v5
+      - uses: astral-sh/setup-uv@v6
+      - name: Lint
+        run: uv run --locked --only-dev ruff check --output-format=github src
+      - name: Formato
+        run: uv run --locked --only-dev ruff format --check src
+
+  frontend:
+    name: Frontend · lint y build
+    needs: cambios
+    if: needs.cambios.outputs.frontend == 'true'
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: frontend
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: frontend/package-lock.json
+      - run: npm ci
+      - name: Lint
+        run: npm run lint
+      # `next build` también revisa los tipos: si pasa aquí, el deploy a main no debería fallar.
+      - name: Build
+        run: npm run build
