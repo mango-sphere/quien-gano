@@ -28,7 +28,7 @@ npm run dev
 ## Estructura
 
 - `src/app/` — rutas: `/`, `/[region]`, `/[region]/[provincia]`.
-- `src/lib/reglas.ts` — regla de segunda vuelta (30 % y 5 puntos, solo gobierno regional).
+- `src/lib/reglas.ts` — regla de segunda vuelta (menos de 30 % de votos válidos, solo gobierno regional).
 - `src/lib/resultados.ts` — acceso a los datos y árbol región → provincia → distrito.
 - `src/lib/vista.ts` — qué muestra cada nivel.
 - `src/components/` — Encabezado, MapaPeru, MigasDePan, BoletaResultado, RankingPartidos, Controles.

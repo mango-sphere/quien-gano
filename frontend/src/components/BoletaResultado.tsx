@@ -112,7 +112,7 @@ function SegundaVuelta({ a, b }: { a: Candidato; b: Candidato }) {
         <Finalista candidato={a} lado="izquierda" />
         <Finalista candidato={b} lado="derecha" />
       </div>
-      <p className={styles.nota}>Nadie llegó al 30 % con 5 puntos de ventaja: se vuelve a votar.</p>
+      <p className={styles.nota}>Nadie llegó al 30 % de los votos válidos: se vuelve a votar.</p>
     </>
   );
 }
