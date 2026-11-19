@@ -1,7 +1,7 @@
 [project]
 name = "scraper"
 version = "0.1.0"
-description = "Add your description here"
+description = "Scraper de resultados de las ERM 2026 (ONPE) completados con datos del JNE"
 readme = "README.md"
 authors = [
     { name = "mardecode", email = "mardecode@gmail.com" }
