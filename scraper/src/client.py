@@ -135,7 +135,7 @@ class OnpeClient:
         El orden de la salida es el mismo que el de ``consultas``.
         """
         urls = [_url(c) for c in consultas]
-        return [_parse_json(url, resp) for url, resp in zip(urls, self._fetch_many(urls))]
+        return [_parse_json(url, resp) for url, resp in zip(urls, self._fetch_many(urls), strict=True)]
 
     def get_bytes(self, url: str, content_type: str) -> bytes:
         """Descarga un archivo y verifica que sea del ``content_type`` esperado.

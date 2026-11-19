@@ -132,13 +132,14 @@ def consultar_estados(casos: set[Caso]) -> tuple[dict[Caso, str], list[str]]:
         httpx.Client(timeout=config.TIMEOUT_JNE_S) as http,
         ThreadPoolExecutor(max_workers=config.CONCURRENCIA_JNE) as pool,
     ):
+
         def organizaciones(ubicacion: tuple[tuple[str, str], ...]) -> list[dict[str, Any]] | Exception:
             try:
                 return _post(http, config.JNE_ENDPOINT_ORGANIZACIONES, dict(ubicacion))
             except (httpx.HTTPError, JneError) as e:
                 return e
 
-        por_ubicacion = dict(zip(ubicaciones, pool.map(organizaciones, ubicaciones)))
+        por_ubicacion = dict(zip(ubicaciones, pool.map(organizaciones, ubicaciones), strict=True))
 
         def estado(caso: Caso) -> str | Exception:
             try:
@@ -150,7 +151,7 @@ def consultar_estados(casos: set[Caso]) -> tuple[dict[Caso, str], list[str]]:
                 return e
 
         ordenados = sorted(casos, key=lambda c: (c.ubigeo, c.cargo, c.organizacion))
-        resultados = dict(zip(ordenados, pool.map(estado, ordenados)))
+        resultados = dict(zip(ordenados, pool.map(estado, ordenados), strict=True))
 
     estados = {c: r for c, r in resultados.items() if isinstance(r, str)}
     fallidos = [
@@ -200,4 +201,3 @@ def completar_estados(reporte: ReporteProceso) -> ReporteProceso:
     logger.success("JNE: {} motivos encontrados, {} sin resolver", len(estados), len(fallidos))
     fallidos_onpe = [f for f in reporte.fallidos if not f.startswith(PREFIJO_FALLIDO)]
     return replace(con_estados(reporte, estados), fallidos=[*fallidos_onpe, *fallidos])
-

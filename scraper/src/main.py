@@ -85,7 +85,9 @@ def _scrapear(inicio: datetime) -> None:
     if reporte.fallidos or logos_fallidos or fotos_fallidas:
         logger.warning(
             "Terminó con {} ámbitos, {} logos y {} fotos faltantes",
-            len(reporte.fallidos), len(logos_fallidos), len(fotos_fallidas),
+            len(reporte.fallidos),
+            len(logos_fallidos),
+            len(fotos_fallidas),
         )
     else:
         logger.success("Todo completo")

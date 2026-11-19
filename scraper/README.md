@@ -38,6 +38,19 @@ Otros comandos, que trabajan sobre lo ya descargado (no vuelven a consultar la O
 | `uv run src/analisis.py` | Regenera los CSV a partir de los JSON. |
 | `uv run src/actualizar_jne.py` | Vuelve a consultar al JNE el motivo de las listas sin candidato. |
 
+## Lint
+
+Ruff está fijado en `pyproject.toml` y `uv.lock`, igual que en el CI. Córrelo siempre a través de `uv`
+para usar esa misma versión (no un `ruff` global):
+
+```bash
+uv run ruff check src
+uv run ruff format src
+```
+
+Si usas la extensión de Ruff de VS Code, configúrala con `"ruff.importStrategy": "fromEnvironment"`
+para que use la del proyecto y no la que trae incluida; si no, puede marcar cosas distintas que el CI.
+
 ## Qué genera
 
 En `../data/2026-erm/` (la carpeta `data/` no se sube a git):

@@ -28,9 +28,7 @@ def descargar_logos(client: OnpeClient, regiones: list[Region]) -> list[str]:
         Los códigos de organización cuyo logo no se pudo descargar.
     """
     config.LOGOS_DIR.mkdir(parents=True, exist_ok=True)
-    pendientes = {
-        codigo: p for codigo, p in participantes_unicos(regiones).items() if not ruta_logo(codigo).exists()
-    }
+    pendientes = {codigo: p for codigo, p in participantes_unicos(regiones).items() if not ruta_logo(codigo).exists()}
     logger.info("Logos: {} por descargar en {}", len(pendientes), config.LOGOS_DIR)
 
     fallidos = []

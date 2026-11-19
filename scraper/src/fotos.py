@@ -60,4 +60,4 @@ def descargar_fotos(regiones: list[Region]) -> list[str]:
         ThreadPoolExecutor(max_workers=config.CONCURRENCIA_FOTOS) as pool,
     ):
         ok = pool.map(lambda item: _descargar_foto(http, *item), pendientes.items())
-        return [dni for dni, descargada in zip(pendientes, ok) if not descargada]
+        return [dni for dni, descargada in zip(pendientes, ok, strict=True) if not descargada]

@@ -36,7 +36,7 @@ def consulta_ranking(id_eleccion: int, *ubigeos: str) -> Consulta:
             "idEleccion": id_eleccion,
             "idAmbitoGeografico": config.AMBITO_NACIONAL,
             "tipoFiltro": config.FILTROS_POR_NIVEL[len(ubigeos)],
-            **dict(zip(config.PARAMS_UBIGEO_POR_NIVEL, ubigeos)),
+            **dict(zip(config.PARAMS_UBIGEO_POR_NIVEL, ubigeos, strict=False)),
         },
     )
 
@@ -131,7 +131,7 @@ def construir_region(client: OnpeClient, region: Ubigeo, fallidos: list[str]) ->
     )
     alcaldes_provinciales: list[Ranking] = []
     distritos_por_provincia: list[list[Ubigeo]] = []
-    for provincia, resp_alcalde, resp_distritos in zip(provincias, lote_2[0::2], lote_2[1::2]):
+    for provincia, resp_alcalde, resp_distritos in zip(provincias, lote_2[0::2], lote_2[1::2], strict=True):
         nombre = f"{provincia['nombre']} ({provincia['ubigeo']})"
         alcaldes_provinciales.append(_ranking_o_vacio(resp_alcalde, f"alcalde provincial {nombre}", fallidos))
         distritos_por_provincia.append(_o_vacio(resp_distritos, [], f"distritos de {nombre}", fallidos))
@@ -139,7 +139,7 @@ def construir_region(client: OnpeClient, region: Ubigeo, fallidos: list[str]) ->
     # Lote 3: alcalde distrital de todos los distritos de la región.
     pares = [
         (provincia, distrito)
-        for provincia, distritos in zip(provincias, distritos_por_provincia)
+        for provincia, distritos in zip(provincias, distritos_por_provincia, strict=True)
         for distrito in distritos
     ]
     lote_3 = client.get_many(
@@ -150,13 +150,13 @@ def construir_region(client: OnpeClient, region: Ubigeo, fallidos: list[str]) ->
     )
     alcaldes_distritales = iter(
         _ranking_o_vacio(resp, f"alcalde distrital {distrito['nombre']} ({distrito['ubigeo']})", fallidos)
-        for (_, distrito), resp in zip(pares, lote_3)
+        for (_, distrito), resp in zip(pares, lote_3, strict=True)
     )
 
     # Armado del árbol, en el mismo orden en que se pidieron las consultas.
     _log_ganador("Región", region, gobernador)
     resultado_provincias = []
-    for provincia, alcalde, distritos in zip(provincias, alcaldes_provinciales, distritos_por_provincia):
+    for provincia, alcalde, distritos in zip(provincias, alcaldes_provinciales, distritos_por_provincia, strict=True):
         _log_ganador("  Provincia", provincia, alcalde)
         resultado_distritos = []
         for distrito in distritos:

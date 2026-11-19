@@ -1,8 +1,0 @@
-.cargando {
-  max-width: var(--ancho-max);
-  margin: 0 auto;
-  padding: 72px var(--margen-lateral);
-  font-size: 18px;
-  font-weight: 600;
-  color: var(--texto-2);
-}
