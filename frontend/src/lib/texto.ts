@@ -23,3 +23,8 @@ export function sigla(partido: string): string {
 export function pluralizar(n: number, singular: string, plural: string): string {
   return `${n} ${n === 1 ? singular : plural}`;
 }
+
+/** Ruta de un archivo de `public/` con el `basePath` delante: `next/image` no lo agrega solo. */
+export function rutaPublica(ruta: string): string {
+  return `${process.env.NEXT_PUBLIC_BASE_PATH ?? ""}${ruta}`;
+}

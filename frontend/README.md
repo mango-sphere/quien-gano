@@ -21,13 +21,15 @@ para ver la página.
 | Comando | Qué hace |
 |---|---|
 | `npm run dev` | Servidor de desarrollo. |
-| `npm run build` | Genera las 222 páginas estáticas (nacional, 25 regiones y 196 provincias). |
-| `npm run start` | Sirve el build de producción. |
+| `npm run build` | Genera el sitio estático en `out/`: 222 páginas (nacional, 25 regiones y 196 provincias). |
 | `npm run lint` | ESLint. |
 | `npm run sincronizar-datos` | Actualiza los datos a partir de la salida del scraper (ver abajo). |
 
-Para verlo desde el celular en la misma red Wi-Fi: `npm run build && npm run start -- -H 0.0.0.0`
-y abre `http://<IP de tu PC>:3000`.
+Para ver el sitio tal como se publica: `npm run build && npx serve out`. `serve` también lo expone en
+tu red, así que puedes abrirlo desde el celular (misma Wi-Fi) con la dirección "Network" que muestra.
+
+Si se publica bajo una subruta (por ejemplo `usuario.github.io/quien-gano`), el build necesita
+`NEXT_PUBLIC_BASE_PATH=/quien-gano`; con dominio propio va vacío. El workflow de deploy lo configura solo.
 
 ## De dónde salen los datos
 

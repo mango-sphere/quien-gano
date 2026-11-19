@@ -1,7 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { useId, useLayoutEffect, useState } from "react";
+import { useId, useState } from "react";
 
 import mapa from "@/data/peru-regiones.json";
 import type { RegionMapa } from "@/lib/vista";
@@ -35,9 +35,6 @@ export function MapaPeru({ regiones, seleccionada }: Props) {
   const router = useRouter();
   const idRayado = useId();
   const [enfocada, setEnfocada] = useState<string | null>(null);
-
-  // La página se oculta (no se desmonta) al navegar: sin esto, el globo quedaría abierto al volver.
-  useLayoutEffect(() => () => setEnfocada(null), []);
 
   const atenuada = (nombre: string) => Boolean(seleccionada) && nombre !== seleccionada && nombre !== enfocada;
   const conGlobo = regiones.find((r) => r.nombre === (enfocada ?? seleccionada));

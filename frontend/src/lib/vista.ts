@@ -1,3 +1,5 @@
+import { version } from "../../package.json";
+
 import { vaASegundaVuelta, type TipoEleccion } from "./reglas";
 import { claves, distritos, metaDatos, provincias, regiones, resultado, rutas } from "./resultados";
 import type { Candidato, Resultado } from "./tipos";
@@ -113,11 +115,12 @@ export function vistaProvincia(region: string, provincia: string): Vista {
   };
 }
 
+/** Fecha de descarga de los datos y versión publicada de la página. */
 export function textoEstadoDatos(): string {
   const fecha = new Intl.DateTimeFormat("es-PE", {
     dateStyle: "medium",
     timeStyle: "short",
     timeZone: "America/Lima",
   }).format(new Date(metaDatos.generadoEn));
-  return `Datos ONPE · ${fecha}`;
+  return `Datos ONPE · ${fecha} · v${version}`;
 }

@@ -1,6 +1,6 @@
 import Image from "next/image";
 
-import { sigla } from "@/lib/texto";
+import { rutaPublica, sigla } from "@/lib/texto";
 import type { Candidato } from "@/lib/tipos";
 
 import styles from "./LogoPartido.module.css";
@@ -16,7 +16,7 @@ export function LogoPartido({ candidato, tamano }: Props) {
   return (
     <span className={styles.logo} aria-hidden="true">
       {candidato.logo ? (
-        <Image src={candidato.logo} alt="" fill sizes={`${tamano}px`} className={styles.imagen} />
+        <Image src={rutaPublica(candidato.logo)} alt="" fill sizes={`${tamano}px`} className={styles.imagen} />
       ) : (
         <span className={styles.sigla} style={{ fontSize: Math.max(6, tamano / 5) }}>
           {candidato.sym ?? sigla(candidato.party)}

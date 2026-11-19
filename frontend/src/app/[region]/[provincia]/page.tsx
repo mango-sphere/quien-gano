@@ -1,8 +1,6 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { Suspense } from "react";
 
-import { Cargando } from "@/components/Cargando";
 import { PantallaResultados } from "@/components/PantallaResultados";
 import { provinciaPorSlug, provincias, regionPorSlug, regiones } from "@/lib/resultados";
 import { aSlug } from "@/lib/texto";
@@ -26,20 +24,13 @@ export async function generateMetadata({ params }: PageProps<"/[region]/[provinc
   return { title: lugar ? `${lugar.provincia}, ${lugar.region}` : "Provincia no encontrada" };
 }
 
-export default function Page({ params }: PageProps<"/[region]/[provincia]">) {
-  return (
-    <Suspense fallback={<Cargando />}>
-      <Provincia params={params} />
-    </Suspense>
-  );
-}
-
-async function Provincia({ params }: Pick<PageProps<"/[region]/[provincia]">, "params">) {
+export default async function Page({ params }: PageProps<"/[region]/[provincia]">) {
   const lugar = await buscar(params);
   if (!lugar) notFound();
 
   return (
     <PantallaResultados
+      key={`${lugar.region}|${lugar.provincia}`}
       vista={vistaProvincia(lugar.region, lugar.provincia)}
       regionesMapa={regionesMapa()}
       estadoDatos={textoEstadoDatos()}

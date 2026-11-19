@@ -1,5 +1,6 @@
 import Image from "next/image";
 
+import { rutaPublica } from "@/lib/texto";
 import type { Candidato } from "@/lib/tipos";
 
 import { LogoPartido } from "./LogoPartido";
@@ -24,7 +25,7 @@ export function Retrato({ candidato, tamano }: Props) {
     >
       <span className={styles.foto} style={{ width: tamano.foto, height: altoFoto }}>
         {candidato.photo ? (
-          <Image src={candidato.photo} alt="" fill sizes={`${tamano.foto}px`} className={styles.imagen} />
+          <Image src={rutaPublica(candidato.photo)} alt="" fill sizes={`${tamano.foto}px`} className={styles.imagen} />
         ) : (
           <SinFoto />
         )}

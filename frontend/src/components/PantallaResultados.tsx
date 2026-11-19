@@ -1,6 +1,6 @@
 "use client";
 
-import { useLayoutEffect, useState } from "react";
+import { useState } from "react";
 
 import { normalizar, pluralizar } from "@/lib/texto";
 import type { Fila, RegionMapa, Vista } from "@/lib/vista";
@@ -36,16 +36,6 @@ export function PantallaResultados({ vista, regionesMapa, estadoDatos }: Props) 
   const [consulta, setConsulta] = useState("");
   const [filtro, setFiltro] = useState<Filtro>("todas");
   const [orden, setOrden] = useState<Orden>("az");
-
-  // Next oculta la página en vez de desmontarla al navegar; al volver, el buscador y el filtro
-  // empiezan limpios para que una búsqueda anterior no deje la lista vacía sin explicación.
-  useLayoutEffect(
-    () => () => {
-      setConsulta("");
-      setFiltro("todas");
-    },
-    [],
-  );
 
   const { filas, unidad } = vista;
   const texto = normalizar(consulta);

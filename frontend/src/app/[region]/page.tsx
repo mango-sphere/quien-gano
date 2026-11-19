@@ -1,8 +1,6 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { Suspense } from "react";
 
-import { Cargando } from "@/components/Cargando";
 import { PantallaResultados } from "@/components/PantallaResultados";
 import { regionPorSlug, regiones } from "@/lib/resultados";
 import { aSlug } from "@/lib/texto";
@@ -17,19 +15,16 @@ export async function generateMetadata({ params }: PageProps<"/[region]">): Prom
   return { title: region ?? "Región no encontrada" };
 }
 
-export default function Page({ params }: PageProps<"/[region]">) {
-  return (
-    <Suspense fallback={<Cargando />}>
-      <Region params={params} />
-    </Suspense>
-  );
-}
-
-async function Region({ params }: Pick<PageProps<"/[region]">, "params">) {
+export default async function Page({ params }: PageProps<"/[region]">) {
   const region = regionPorSlug((await params).region);
   if (!region) notFound();
 
   return (
-    <PantallaResultados vista={vistaRegion(region)} regionesMapa={regionesMapa()} estadoDatos={textoEstadoDatos()} />
+    <PantallaResultados
+      key={region}
+      vista={vistaRegion(region)}
+      regionesMapa={regionesMapa()}
+      estadoDatos={textoEstadoDatos()}
+    />
   );
 }
