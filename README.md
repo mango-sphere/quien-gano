@@ -4,6 +4,12 @@ Resultados de las **Elecciones Regionales y Municipales 2026 (ERM 2026)** del Pe
 forma simple: en cada región, provincia y distrito, quién ganó o quiénes van a segunda vuelta,
 con su partido (por logo), su foto y su porcentaje.
 
+**[Ver la página → quiengano.mangosphere.tech](https://quiengano.mangosphere.tech)**
+
+![Portada: buscador, mapa del Perú con el partido que lidera en cada región y ranking de partidos](image/README/portada.webp)
+
+![Tarjetas de resultados: ganadores y segunda vuelta, con foto del candidato y logo del partido](image/README/tarjetas.webp)
+
 ## Cómo está armado
 
 El proyecto tiene dos partes: un **scraper** que descarga los resultados oficiales y una
@@ -15,11 +21,11 @@ ONPE (resultados, logos) ──┐
 JNE (fotos, motivos)  ─────┘                (local, fuera de git)                             (datos en el repo)
 ```
 
-| Carpeta | Qué es | Documentación |
-|---|---|---|
-| `scraper/` | Python 3.13 + uv. Descarga de la ONPE y el JNE y guarda JSON, CSV, logos y fotos. | [scraper/README.md](scraper/README.md) |
-| `frontend/` | Next.js. Genera la página estática a partir de los datos ya convertidos. | [frontend/README.md](frontend/README.md) |
-| `data/` | Salida del scraper. No se sube a git; se regenera corriendo el scraper. | — |
+| Carpeta       | Qué es                                                                           | Documentación                          |
+| ------------- | --------------------------------------------------------------------------------- | --------------------------------------- |
+| `scraper/`  | Python 3.13 + uv. Descarga de la ONPE y el JNE y guarda JSON, CSV, logos y fotos. | [scraper/README.md](scraper/README.md)   |
+| `frontend/` | Next.js. Genera la página estática a partir de los datos ya convertidos.        | [frontend/README.md](frontend/README.md) |
+| `data/`     | Salida del scraper. No se sube a git; se regenera corriendo el scraper.           | —                                      |
 
 ## Inicio rápido
 
@@ -45,10 +51,10 @@ npm run sincronizar-datos
 
 Con GitHub Actions (`.github/workflows/`):
 
-| Workflow | Cuándo | Qué hace |
-|---|---|---|
-| `ci.yml` | Pull request hacia `develop` | Scraper: Ruff (lint y formato). Frontend: ESLint y `next build` (incluye tipos). Solo corre la parte que cambió. |
-| `deploy.yml` | Push a `main` (o a mano) | Construye el frontend y lo publica en GitHub Pages. |
+| Workflow       | Cuándo                        | Qué hace                                                                                                           |
+| -------------- | ------------------------------ | ------------------------------------------------------------------------------------------------------------------- |
+| `ci.yml`     | Pull request hacia `develop` | Scraper: Ruff (lint y formato). Frontend: ESLint y `next build` (incluye tipos). Solo corre la parte que cambió. |
+| `deploy.yml` | Push a `main` (o a mano)     | Construye el frontend y lo publica en GitHub Pages.                                                                 |
 
 Flujo de ramas: `feat/*` → PR a `develop` → PR a `main` (publica).
 
