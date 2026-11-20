@@ -54,7 +54,7 @@ export function PantallaResultados({ vista, estadoDatos }: Props) {
       <BarraNavegacion estadoDatos={estadoDatos} />
       <Encabezado />
 
-      <main id={ID_RESULTADOS} className={styles.principal}>
+      <main className={styles.principal}>
         <div className={styles.ubicacion}>
           <MigasDePan migas={vista.migas} />
           <h2 className={styles.titulo}>{vista.titulo}</h2>
@@ -64,7 +64,7 @@ export function PantallaResultados({ vista, estadoDatos }: Props) {
 
         <RankingPartidos filas={filas} ambito={vista.ambito} unidad={unidad} />
 
-        <div className={styles.cabeceraLista}>
+        <div id={ID_RESULTADOS} className={styles.cabeceraLista}>
           <h3 className={styles.tituloLista}>
             {vista.tituloLista}{" "}
             <span className={styles.cantidad}>· {pluralizar(visibles.length, unidad.singular, unidad.plural)}</span>

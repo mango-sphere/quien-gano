@@ -1,6 +1,4 @@
 .principal {
-  /* Que la barra fija no tape el inicio al bajar con "Ver resultados". */
-  scroll-margin-top: 70px;
   display: flex;
   flex-direction: column;
   gap: 22px;
@@ -22,10 +20,10 @@
 }
 
 .cabeceraLista {
+  /* Destino de "Ver resultados": que la barra fija no lo tape. */
+  scroll-margin-top: 70px;
   display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  align-items: center;
+  flex-direction: column;
   gap: 12px;
   margin-top: 6px;
 }
@@ -33,9 +31,8 @@
 .controles {
   display: flex;
   flex-wrap: wrap;
-  justify-content: flex-end;
+  align-items: center;
   gap: 10px;
-  margin-left: auto;
 }
 
 .tituloLista {
