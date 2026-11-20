@@ -16,8 +16,8 @@ const spaceMono = Space_Mono({
 
 export const metadata: Metadata = {
   title: {
-    default: "Quién ganó en tu distrito — Elecciones 2026",
-    template: "%s — Quién ganó en tu distrito",
+    default: "¿Quién ganó? — Elecciones 2026",
+    template: "%s — ¿Quién ganó?",
   },
   description:
     "Resultados de las Elecciones Regionales y Municipales 2026 del Perú: quién ganó o quiénes van a segunda vuelta en tu región, provincia y distrito.",

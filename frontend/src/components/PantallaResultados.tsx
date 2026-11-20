@@ -3,7 +3,7 @@
 import { useState } from "react";
 
 import { normalizar, pluralizar } from "@/lib/texto";
-import type { Fila, RegionMapa, Vista } from "@/lib/vista";
+import type { Fila, Vista } from "@/lib/vista";
 
 import { BoletaResultado } from "./BoletaResultado";
 import { FiltroEstado, SelectorOrden, type Filtro, type Orden } from "./Controles";
@@ -14,7 +14,6 @@ import { RankingPartidos } from "./RankingPartidos";
 
 type Props = {
   vista: Vista;
-  regionesMapa: RegionMapa[];
   estadoDatos: string;
 };
 
@@ -32,7 +31,7 @@ const CUMPLE_FILTRO: Record<Filtro, (f: Fila) => boolean> = {
   vuelta: (f) => f.segundaVuelta,
 };
 
-export function PantallaResultados({ vista, regionesMapa, estadoDatos }: Props) {
+export function PantallaResultados({ vista, estadoDatos }: Props) {
   const [consulta, setConsulta] = useState("");
   const [filtro, setFiltro] = useState<Filtro>("todas");
   const [orden, setOrden] = useState<Orden>("az");
@@ -57,8 +56,6 @@ export function PantallaResultados({ vista, regionesMapa, estadoDatos }: Props) 
         onConsulta={setConsulta}
         etiquetaBuscador={`Busca tu ${unidad.singular}`}
         ejemploBuscador={filas[0] ? `Ej. ${filas[0].lugar}` : ""}
-        regiones={regionesMapa}
-        regionSeleccionada={vista.regionSeleccionada}
       />
 
       <main className={styles.principal}>

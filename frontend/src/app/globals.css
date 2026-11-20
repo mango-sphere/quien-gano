@@ -20,8 +20,6 @@
   --vuelta-fondo: #ffd966;
   --vuelta-texto: #6b4500;
 
-  --mapa-borde: #1d4f86;
-  --mapa-rayado: #6f93c4;
 
   --ancho-max: 1320px;
   --margen-lateral: clamp(16px, 4vw, 40px);

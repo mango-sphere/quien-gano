@@ -1,4 +1,4 @@
-# Quién ganó en tu distrito
+# ¿Quién ganó?
 
 Resultados de las **Elecciones Regionales y Municipales 2026 (ERM 2026)** del Perú, presentados de
 forma simple: en cada región, provincia y distrito, quién ganó o quiénes van a segunda vuelta,

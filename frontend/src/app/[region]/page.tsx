@@ -4,7 +4,7 @@ import { notFound } from "next/navigation";
 import { PantallaResultados } from "@/components/PantallaResultados";
 import { regionPorSlug, regiones } from "@/lib/resultados";
 import { aSlug } from "@/lib/texto";
-import { regionesMapa, textoEstadoDatos, vistaRegion } from "@/lib/vista";
+import { textoEstadoDatos, vistaRegion } from "@/lib/vista";
 
 export function generateStaticParams() {
   return regiones().map((region) => ({ region: aSlug(region) }));
@@ -23,7 +23,6 @@ export default async function Page({ params }: PageProps<"/[region]">) {
     <PantallaResultados
       key={region}
       vista={vistaRegion(region)}
-      regionesMapa={regionesMapa()}
       estadoDatos={textoEstadoDatos()}
     />
   );

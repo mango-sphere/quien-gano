@@ -1,5 +1,5 @@
 .encabezado {
-  padding: clamp(22px, 4vw, 40px) var(--margen-lateral) clamp(32px, 5vw, 56px);
+  padding: clamp(24px, 4vw, 44px) var(--margen-lateral) clamp(32px, 5vw, 52px);
   border-radius: 0 0 40px 40px;
   background: linear-gradient(160deg, var(--marino), var(--azul));
   color: #fff;
@@ -9,21 +9,29 @@
   outline-color: var(--amarillo);
 }
 
+/* Dos columnas que se apilan cuando no entran (móvil). */
 .contenedor {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: 28px 48px;
+  gap: 24px 56px;
   max-width: var(--ancho-max);
   margin: 0 auto;
 }
 
 .portada {
-  flex: 999 1 520px;
-  min-width: 0;
+  flex: 1 1 420px;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
+  gap: 18px;
+}
+
+.busqueda {
+  flex: 1 1 380px;
+  max-width: 560px;
+  display: flex;
+  flex-direction: column;
   gap: 18px;
 }
 
@@ -45,7 +53,8 @@
 
 .resaltado {
   display: inline-block;
-  padding: 0 0.2em;
+  /* Relleno abajo para que entren las letras que bajan de la línea (la "g" de "ganó"). */
+  padding: 0 0.2em 0.14em;
   border-radius: 0.25em;
   background: var(--amarillo);
   color: var(--marino);
@@ -53,7 +62,6 @@
 }
 
 .bajada {
-  max-width: 540px;
   font-size: clamp(15px, 2vw, 18px);
   line-height: 1.5;
 }
@@ -62,9 +70,6 @@
   display: flex;
   flex-direction: column;
   gap: 8px;
-  width: 100%;
-  max-width: 520px;
-  margin-top: 6px;
 }
 
 .etiquetaBuscador {
@@ -88,76 +93,4 @@
 
 .campo::placeholder {
   color: var(--texto-4);
-}
-
-.columnaMapa {
-  flex: 1 1 300px;
-  min-width: 0;
-  max-width: 420px;
-  margin: 0 auto;
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
-
-.cabeceraMapa {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  align-items: center;
-  gap: 8px;
-  min-height: 40px;
-}
-
-.tituloMapa {
-  font-weight: 700;
-  font-size: 14px;
-  letter-spacing: 0.08em;
-}
-
-.verPeru {
-  display: inline-flex;
-  align-items: center;
-  min-height: 40px;
-  padding: 8px 14px;
-  border: 1.5px solid #fff;
-  border-radius: 99px;
-  background: #ffffff1f;
-  color: #fff;
-  font-size: 13px;
-  font-weight: 600;
-  text-decoration: none;
-}
-
-.verPeru:hover {
-  color: #fff;
-  background: #ffffff33;
-}
-
-.leyenda {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px 18px;
-  margin: 0;
-  padding: 0;
-  list-style: none;
-  font-size: 12px;
-  color: var(--celeste);
-}
-
-.leyenda li {
-  display: inline-flex;
-  align-items: center;
-  gap: 7px;
-}
-
-.muestra {
-  width: 14px;
-  height: 14px;
-  border-radius: 3px;
-  background: #fff;
-}
-
-.muestraRayada {
-  background: repeating-linear-gradient(45deg, #fff 0 3px, var(--mapa-rayado) 3px 5px);
 }

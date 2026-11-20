@@ -4,7 +4,7 @@ import { notFound } from "next/navigation";
 import { PantallaResultados } from "@/components/PantallaResultados";
 import { provinciaPorSlug, provincias, regionPorSlug, regiones } from "@/lib/resultados";
 import { aSlug } from "@/lib/texto";
-import { regionesMapa, textoEstadoDatos, vistaProvincia } from "@/lib/vista";
+import { textoEstadoDatos, vistaProvincia } from "@/lib/vista";
 
 export function generateStaticParams() {
   return regiones().flatMap((region) =>
@@ -32,7 +32,6 @@ export default async function Page({ params }: PageProps<"/[region]/[provincia]"
     <PantallaResultados
       key={`${lugar.region}|${lugar.provincia}`}
       vista={vistaProvincia(lugar.region, lugar.provincia)}
-      regionesMapa={regionesMapa()}
       estadoDatos={textoEstadoDatos()}
     />
   );
