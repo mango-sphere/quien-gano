@@ -2,20 +2,24 @@
 
 import { useState } from "react";
 
-import { normalizar, pluralizar } from "@/lib/texto";
-import type { Fila, RegionMapa, Vista } from "@/lib/vista";
+import { idTarjeta } from "@/lib/busqueda";
+import { pluralizar } from "@/lib/texto";
+import type { EstadoDatos, Fila, Vista } from "@/lib/vista";
 
+import { BarraNavegacion } from "./BarraNavegacion";
 import { BoletaResultado } from "./BoletaResultado";
+import { BuscadorLugares } from "./BuscadorLugares";
 import { FiltroEstado, SelectorOrden, type Filtro, type Orden } from "./Controles";
-import { Encabezado } from "./Encabezado";
+import { Encabezado, ID_RESULTADOS } from "./Encabezado";
 import { MigasDePan } from "./MigasDePan";
 import styles from "./PantallaResultados.module.css";
 import { RankingPartidos } from "./RankingPartidos";
 
 type Props = {
   vista: Vista;
-  regionesMapa: RegionMapa[];
-  estadoDatos: string;
+  estadoDatos: EstadoDatos;
+  /** El landing solo va en la página de inicio. */
+  conPortada?: boolean;
 };
 
 const pct = (f: Fila) => parseFloat(f.resultado.a.pct);
@@ -32,16 +36,14 @@ const CUMPLE_FILTRO: Record<Filtro, (f: Fila) => boolean> = {
   vuelta: (f) => f.segundaVuelta,
 };
 
-export function PantallaResultados({ vista, regionesMapa, estadoDatos }: Props) {
-  const [consulta, setConsulta] = useState("");
+export function PantallaResultados({ vista, estadoDatos, conPortada = false }: Props) {
   const [filtro, setFiltro] = useState<Filtro>("todas");
   const [orden, setOrden] = useState<Orden>("az");
 
   const { filas, unidad } = vista;
-  const texto = normalizar(consulta);
-  const visibles = filas
-    .filter((f) => normalizar(f.lugar).includes(texto) && CUMPLE_FILTRO[filtro](f))
-    .sort(COMPARADORES[orden]);
+  // Con landing, el <h1> es "¿Quién ganó?"; sin él, el nombre del lugar es el título de la página.
+  const TituloLugar = conPortada ? "h2" : "h1";
+  const visibles = filas.filter(CUMPLE_FILTRO[filtro]).sort(COMPARADORES[orden]);
 
   const conteos: Record<Filtro, number> = {
     todas: filas.length,
@@ -51,47 +53,42 @@ export function PantallaResultados({ vista, regionesMapa, estadoDatos }: Props) 
 
   return (
     <>
-      <Encabezado
-        estadoDatos={estadoDatos}
-        consulta={consulta}
-        onConsulta={setConsulta}
-        etiquetaBuscador={`Busca tu ${unidad.singular}`}
-        ejemploBuscador={filas[0] ? `Ej. ${filas[0].lugar}` : ""}
-        regiones={regionesMapa}
-        regionSeleccionada={vista.regionSeleccionada}
-      />
+      <BarraNavegacion estadoDatos={estadoDatos} enInicio={conPortada} />
+      {conPortada && <Encabezado />}
 
       <main className={styles.principal}>
         <div className={styles.ubicacion}>
           <MigasDePan migas={vista.migas} />
-          <h2 className={styles.titulo}>{vista.titulo}</h2>
+          <TituloLugar className={styles.titulo}>{vista.titulo}</TituloLugar>
         </div>
 
         {vista.destacada && <BoletaResultado {...vista.destacada} variante="destacada" />}
 
-        <RankingPartidos filas={filas} ambito={vista.ambito} unidad={unidad}>
-          {vista.conFiltro && <FiltroEstado valor={filtro} onCambiar={setFiltro} conteos={conteos} />}
-        </RankingPartidos>
+        <RankingPartidos filas={filas} ambito={vista.ambito} unidad={unidad} />
 
-        <div className={styles.cabeceraLista}>
+        <div id={ID_RESULTADOS} className={styles.cabeceraLista}>
+          <BuscadorLugares variante="lista" />
           <h3 className={styles.tituloLista}>
             {vista.tituloLista}{" "}
             <span className={styles.cantidad}>· {pluralizar(visibles.length, unidad.singular, unidad.plural)}</span>
           </h3>
-          <SelectorOrden valor={orden} onCambiar={setOrden} />
+          <div className={styles.controles}>
+            {vista.conFiltro && <FiltroEstado valor={filtro} onCambiar={setFiltro} conteos={conteos} />}
+            <SelectorOrden valor={orden} onCambiar={setOrden} />
+          </div>
         </div>
 
         {visibles.length > 0 ? (
           <ol className={styles.lista}>
             {visibles.map((f, i) => (
-              <li key={f.lugar} className={styles.elemento}>
+              <li key={f.lugar} id={idTarjeta(f.lugar)} className={styles.elemento}>
                 <BoletaResultado {...f} variante="fila" numero={i + 1} />
               </li>
             ))}
           </ol>
         ) : (
           <p role="status" className={styles.vacio}>
-            {filas.length > 0 ? "Ningún resultado con ese nombre o filtro." : "Sin datos para este lugar todavía."}
+            {filas.length > 0 ? "Ningún resultado con ese filtro." : "Sin datos para este lugar todavía."}
           </p>
         )}
       </main>
