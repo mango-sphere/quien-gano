@@ -18,8 +18,8 @@ npm run dev
 Abre <http://localhost:3000>. Los datos ya vienen en el repo, así que no hace falta correr el scraper
 para ver la página.
 
-La versión que aparece en la barra superior sale de `version` en `package.json`: súbela
-antes de publicar un cambio visible.
+La versión del proyecto está en `version` de `package.json`: súbela antes de publicar un cambio
+visible.
 
 | Comando | Qué hace |
 |---|---|

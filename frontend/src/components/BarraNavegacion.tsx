@@ -35,7 +35,7 @@ export function BarraNavegacion({ estadoDatos, enInicio }: Props) {
           <span aria-hidden="true" className={styles.punto} />
           <span>
             <span className={styles.prescindible}>Datos </span>ONPE · {estadoDatos.fecha}
-            <span className={styles.prescindible}>, {estadoDatos.hora}</span> · {estadoDatos.version}
+            <span className={styles.prescindible}>, {estadoDatos.hora}</span>
           </span>
         </span>
       </div>

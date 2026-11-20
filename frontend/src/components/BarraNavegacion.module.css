@@ -64,7 +64,7 @@
   background: var(--marino);
 }
 
-/* En pantallas angostas el estado se abrevia ("ONPE · 16 nov. 2026 · v0.2.0") y se compacta
+/* En pantallas angostas el estado se abrevia ("ONPE · 16 nov. 2026") y se compacta
    para que la barra quepa en una línea. */
 @media (max-width: 480px) {
   .contenedor {
