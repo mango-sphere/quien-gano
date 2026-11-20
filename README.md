@@ -6,9 +6,9 @@ con su partido (por logo), su foto y su porcentaje.
 
 **[Ver la página → quiengano.mangosphere.tech](https://quiengano.mangosphere.tech)**
 
-![Portada: buscador, mapa del Perú con el partido que lidera en cada región y ranking de partidos](image/README/portada.webp)
+![Portada: «¿Quién ganó?», buscador de lugares y quién lidera en las regiones](image/README/portada-2026-11.webp)
 
-![Tarjetas de resultados: ganadores y segunda vuelta, con foto del candidato y logo del partido](image/README/tarjetas.webp)
+![Tarjetas de resultados: buscador, filtros y ganadores o segunda vuelta con foto y logo del partido](image/README/tarjetas-2026-11.webp)
 
 ## Cómo está armado
 
