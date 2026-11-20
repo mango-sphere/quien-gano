@@ -18,10 +18,13 @@ npm run dev
 Abre <http://localhost:3000>. Los datos ya vienen en el repo, así que no hace falta correr el scraper
 para ver la página.
 
+La versión que aparece en la barra superior sale de `version` en `package.json`: súbela
+antes de publicar un cambio visible.
+
 | Comando | Qué hace |
 |---|---|
 | `npm run dev` | Servidor de desarrollo. |
-| `npm run build` | Genera el sitio estático en `out/`: 222 páginas (nacional, 25 regiones y 196 provincias). |
+| `npm run build` | Genera el sitio estático en `out/`: 222 páginas (nacional, 25 regiones y 196 provincias) y `lugares.json`, el índice del buscador. |
 | `npm run lint` | ESLint. |
 | `npm run sincronizar-datos` | Actualiza los datos a partir de la salida del scraper (ver abajo). |
 
@@ -108,5 +111,5 @@ Los tipos están en `src/lib/tipos.ts`.
 | `src/app/lugares.json/` | Índice estático de regiones, provincias y distritos para el buscador general. |
 | `src/lib/busqueda.ts` | Búsqueda de lugares (sin mayúsculas ni tildes, los más parecidos primero). |
 | `src/lib/reglas.ts` | Regla de segunda vuelta. |
-| `src/components/` | `BarraNavegacion`, `Encabezado` (portada con `IlustracionPeru`), `BuscadorLugares`, `MigasDePan`, `BoletaResultado`, `Retrato`, `RankingPartidos`, `Controles`… |
+| `src/components/` | `BarraNavegacion`, `Encabezado` (portada con `IlustracionPeru`), `BuscadorLugares`, `MigasDePan`, `BoletaResultado`, `Retrato`, `RankingPartidos`, `Controles`, `PiePagina`… |
 | `scripts/sincronizar-datos.mts` | Conversión de la salida del scraper al contrato de datos. |

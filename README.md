@@ -6,6 +6,9 @@ con su partido (por logo), su foto y su porcentaje.
 
 **[Ver la página → quiengano.mangosphere.tech](https://quiengano.mangosphere.tech)**
 
+Busca tu región, provincia o distrito y ve de un vistazo quién ganó, qué partidos lideran y
+quiénes pasan a segunda vuelta (en gobiernos regionales, si nadie llega al 30 % de los votos válidos).
+
 ![Portada: «¿Quién ganó?», buscador de lugares y quién lidera en las regiones](image/README/portada-2026-11.webp)
 
 ![Tarjetas de resultados: buscador, filtros y ganadores o segunda vuelta con foto y logo del partido](image/README/tarjetas-2026-11.webp)
@@ -85,6 +88,11 @@ Este proyecto no crea ni modifica resultados: solo los descarga, los ordena y lo
 - Los **logos** de las organizaciones políticas y las **fotos** de los candidatos pertenecen a sus
   respectivos titulares. Se muestran solo con fines informativos y no están cubiertos por la licencia
   de este repositorio.
+
+## Autoría
+
+Hecho por Margarita ([mardecode](https://github.com/mardecode)) · Mangosphere.
+[LinkedIn](https://www.linkedin.com/in/mardecode/)
 
 ## Licencia
 
