@@ -11,8 +11,8 @@ type Props = {
   enInicio: boolean;
 };
 
-/** Barra fija, siempre visible: la marca y el estado de los datos. */
-export function BarraNavegacion({ estadoDatos, enInicio }: Props) {
+/** Barra fija, siempre visible, con la marca. */
+export function BarraNavegacion({ enInicio }: Props) {
   const marca = (
     <>
       ¿Quién <span className={styles.resaltado}>ganó</span>?
@@ -31,6 +31,8 @@ export function BarraNavegacion({ estadoDatos, enInicio }: Props) {
             {marca}
           </Link>
         )}
+        {/* Fecha de los datos de la ONPE: oculta mientras no haya actualizaciones seguidas. Para mostrarla,
+            quita el comentario y vuelve a recibir `estadoDatos` en las props.
         <span className={styles.estadoDatos}>
           <span aria-hidden="true" className={styles.punto} />
           <span>
@@ -38,6 +40,7 @@ export function BarraNavegacion({ estadoDatos, enInicio }: Props) {
             <span className={styles.prescindible}>, {estadoDatos.hora}</span>
           </span>
         </span>
+        */}
       </div>
     </nav>
   );
