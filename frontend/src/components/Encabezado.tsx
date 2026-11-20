@@ -1,3 +1,4 @@
+import { BuscadorLugares } from "./BuscadorLugares";
 import styles from "./Encabezado.module.css";
 import { IlustracionPeru } from "./IlustracionPeru";
 
@@ -16,6 +17,7 @@ export function Encabezado() {
         <p className={styles.bajada}>
           Solo el ganador, o quiénes pasan a segunda vuelta, en tu región, provincia y distrito.
         </p>
+        <BuscadorLugares variante="portada" />
         <a href={`#${ID_RESULTADOS}`} className={styles.verResultados}>
           Ver resultados <span aria-hidden="true">↓</span>
         </a>

@@ -69,34 +69,3 @@ export function SelectorOrden({ valor, onCambiar }: PropsOrden) {
     </div>
   );
 }
-
-type PropsBusqueda = {
-  valor: string;
-  onCambiar: (consulta: string) => void;
-  /** "Busca tu región" / "Busca tu provincia" / "Busca tu distrito". */
-  etiqueta: string;
-};
-
-export function CampoBusqueda({ valor, onCambiar, etiqueta }: PropsBusqueda) {
-  const idCampo = useId();
-  return (
-    <div className={styles.busqueda}>
-      <label htmlFor={idCampo} className="visualmente-oculto">
-        {etiqueta}
-      </label>
-      <svg aria-hidden="true" viewBox="0 0 24 24" width="18" height="18" className={styles.lupa}>
-        <circle cx="11" cy="11" r="7" fill="none" stroke="var(--texto-3)" strokeWidth="2" />
-        <path d="M16.5 16.5 L21 21" stroke="var(--texto-3)" strokeWidth="2" strokeLinecap="round" />
-      </svg>
-      <input
-        id={idCampo}
-        type="search"
-        value={valor}
-        onChange={(e) => onCambiar(e.target.value)}
-        placeholder={etiqueta}
-        autoComplete="off"
-        className={styles.campo}
-      />
-    </div>
-  );
-}
