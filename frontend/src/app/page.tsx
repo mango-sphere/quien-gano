@@ -1,8 +1,8 @@
 import { PantallaResultados } from "@/components/PantallaResultados";
-import { textoEstadoDatos, vistaNacional } from "@/lib/vista";
+import { estadoDatos, vistaNacional } from "@/lib/vista";
 
 export default function Page() {
   return (
-    <PantallaResultados vista={vistaNacional()} estadoDatos={textoEstadoDatos()} />
+    <PantallaResultados vista={vistaNacional()} estadoDatos={estadoDatos()} />
   );
 }

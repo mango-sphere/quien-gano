@@ -106,5 +106,5 @@ Los tipos están en `src/lib/tipos.ts`.
 | `src/lib/resultados.ts` | Acceso a los datos y árbol región → provincia → distrito. |
 | `src/lib/vista.ts` | Qué muestra cada nivel (título, migas, tarjeta destacada, lista). |
 | `src/lib/reglas.ts` | Regla de segunda vuelta. |
-| `src/components/` | `Encabezado`, `MigasDePan`, `BoletaResultado`, `Retrato`, `RankingPartidos`, `Controles`… |
+| `src/components/` | `BarraNavegacion`, `Encabezado` (portada con `IlustracionPeru`), `MigasDePan`, `BoletaResultado`, `Retrato`, `RankingPartidos`, `Controles`… |
 | `scripts/sincronizar-datos.mts` | Conversión de la salida del scraper al contrato de datos. |

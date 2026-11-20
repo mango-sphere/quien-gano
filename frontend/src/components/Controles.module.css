@@ -3,11 +3,11 @@
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: 4px;
-  padding: 4px;
+  gap: 2px;
+  padding: 3px;
   border: 1px solid var(--borde-suave);
   /* Como píldora en una línea; si los botones pasan a dos líneas (móvil) no se deforma en óvalo. */
-  border-radius: 26px;
+  border-radius: 24px;
   background: var(--superficie);
 }
 
@@ -15,13 +15,13 @@
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  min-height: 42px;
-  padding: 9px 16px;
+  min-height: 40px;
+  padding: 8px 14px;
   border: 0;
   border-radius: 99px;
   background: transparent;
   color: var(--marino);
-  font-size: 14px;
+  font-size: 13px;
   font-weight: 600;
   cursor: pointer;
 }
@@ -32,14 +32,12 @@
 }
 
 .conteo {
-  min-width: 14px;
   padding: 0 8px;
   border-radius: 99px;
   background: var(--celeste);
   color: var(--marino);
   font-size: 13px;
   font-weight: 800;
-  text-align: center;
 }
 
 .opcion[aria-pressed="true"] .conteo {
@@ -47,10 +45,39 @@
 }
 
 .etiquetaOrden {
-  padding: 0 8px 0 12px;
-  font-size: 12px;
+  margin: 0 4px 0 9px;
+  font-size: 11px;
   font-weight: 700;
   letter-spacing: 0.08em;
   text-transform: uppercase;
   color: var(--texto-2);
+}
+
+.busqueda {
+  position: relative;
+  flex: 1 1 220px;
+  min-width: 200px;
+}
+
+.lupa {
+  position: absolute;
+  top: 50%;
+  left: 12px;
+  transform: translateY(-50%);
+  pointer-events: none;
+}
+
+.campo {
+  width: 100%;
+  min-height: 42px;
+  padding: 10px 14px 10px 38px;
+  border: 1px solid var(--borde-suave);
+  border-radius: 99px;
+  background: var(--superficie);
+  color: var(--marino);
+  font-size: 14px;
+}
+
+.campo::placeholder {
+  color: var(--texto-4);
 }

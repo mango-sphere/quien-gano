@@ -1,4 +1,6 @@
 .principal {
+  /* Que la barra fija no tape el inicio al bajar con "Ver resultados". */
+  scroll-margin-top: 70px;
   display: flex;
   flex-direction: column;
   gap: 22px;

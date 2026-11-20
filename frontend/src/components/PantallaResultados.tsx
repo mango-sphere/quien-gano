@@ -3,18 +3,19 @@
 import { useState } from "react";
 
 import { normalizar, pluralizar } from "@/lib/texto";
-import type { Fila, Vista } from "@/lib/vista";
+import type { EstadoDatos, Fila, Vista } from "@/lib/vista";
 
+import { BarraNavegacion } from "./BarraNavegacion";
 import { BoletaResultado } from "./BoletaResultado";
-import { FiltroEstado, SelectorOrden, type Filtro, type Orden } from "./Controles";
-import { Encabezado } from "./Encabezado";
+import { CampoBusqueda, FiltroEstado, SelectorOrden, type Filtro, type Orden } from "./Controles";
+import { Encabezado, ID_RESULTADOS } from "./Encabezado";
 import { MigasDePan } from "./MigasDePan";
 import styles from "./PantallaResultados.module.css";
 import { RankingPartidos } from "./RankingPartidos";
 
 type Props = {
   vista: Vista;
-  estadoDatos: string;
+  estadoDatos: EstadoDatos;
 };
 
 const pct = (f: Fila) => parseFloat(f.resultado.a.pct);
@@ -50,15 +51,10 @@ export function PantallaResultados({ vista, estadoDatos }: Props) {
 
   return (
     <>
-      <Encabezado
-        estadoDatos={estadoDatos}
-        consulta={consulta}
-        onConsulta={setConsulta}
-        etiquetaBuscador={`Busca tu ${unidad.singular}`}
-        ejemploBuscador={filas[0] ? `Ej. ${filas[0].lugar}` : ""}
-      />
+      <BarraNavegacion estadoDatos={estadoDatos} />
+      <Encabezado />
 
-      <main className={styles.principal}>
+      <main id={ID_RESULTADOS} className={styles.principal}>
         <div className={styles.ubicacion}>
           <MigasDePan migas={vista.migas} />
           <h2 className={styles.titulo}>{vista.titulo}</h2>
@@ -74,6 +70,11 @@ export function PantallaResultados({ vista, estadoDatos }: Props) {
             <span className={styles.cantidad}>· {pluralizar(visibles.length, unidad.singular, unidad.plural)}</span>
           </h3>
           <div className={styles.controles}>
+            <CampoBusqueda
+              valor={consulta}
+              onCambiar={setConsulta}
+              etiqueta={`Busca tu ${unidad.singular}`}
+            />
             {vista.conFiltro && <FiltroEstado valor={filtro} onCambiar={setFiltro} conteos={conteos} />}
             <SelectorOrden valor={orden} onCambiar={setOrden} />
           </div>

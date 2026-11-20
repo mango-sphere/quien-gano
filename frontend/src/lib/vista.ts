@@ -98,12 +98,12 @@ export function vistaProvincia(region: string, provincia: string): Vista {
   };
 }
 
-/** Fecha de descarga de los datos y versión publicada de la página. */
-export function textoEstadoDatos(): string {
-  const fecha = new Intl.DateTimeFormat("es-PE", {
-    dateStyle: "medium",
-    timeStyle: "short",
-    timeZone: "America/Lima",
-  }).format(new Date(metaDatos.generadoEn));
-  return `Datos ONPE · ${fecha} · v${version}`;
+export type EstadoDatos = { fecha: string; hora: string; version: string };
+
+/** Fecha y hora del corte de datos de la ONPE y versión publicada de la página. */
+export function estadoDatos(): EstadoDatos {
+  const momento = new Date(metaDatos.generadoEn);
+  const formato = (opciones: Intl.DateTimeFormatOptions) =>
+    new Intl.DateTimeFormat("es-PE", { ...opciones, timeZone: "America/Lima" }).format(momento);
+  return { fecha: formato({ dateStyle: "medium" }), hora: formato({ timeStyle: "short" }), version: `v${version}` };
 }

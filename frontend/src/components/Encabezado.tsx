@@ -1,49 +1,25 @@
-import { useId } from "react";
-
 import styles from "./Encabezado.module.css";
+import { IlustracionPeru } from "./IlustracionPeru";
 
-type Props = {
-  estadoDatos: string;
-  consulta: string;
-  onConsulta: (consulta: string) => void;
-  etiquetaBuscador: string;
-  ejemploBuscador: string;
-};
+export const ID_INICIO = "inicio";
+export const ID_RESULTADOS = "resultados";
 
-export function Encabezado({ estadoDatos, consulta, onConsulta, etiquetaBuscador, ejemploBuscador }: Props) {
-  const idBuscador = useId();
-
+export function Encabezado() {
   return (
-    <header className={styles.encabezado}>
-      <div className={styles.contenedor}>
-        <div className={styles.portada}>
-          <span className={styles.estadoDatos}>{estadoDatos}</span>
-          <h1 className={styles.titulo}>
-            ¿Quién <span className={styles.resaltado}>ganó</span>?
-          </h1>
-        </div>
-
-        <div className={styles.busqueda}>
-          <p className={styles.bajada}>
-            Elecciones Municipales 2026. Solo el ganador, o quiénes pasan a segunda vuelta. Busca tu región o
-            elígela en la lista.
-          </p>
-          <div className={styles.buscador}>
-            <label htmlFor={idBuscador} className={styles.etiquetaBuscador}>
-              {etiquetaBuscador}
-            </label>
-            <input
-              id={idBuscador}
-              type="search"
-              value={consulta}
-              onChange={(e) => onConsulta(e.target.value)}
-              placeholder={ejemploBuscador}
-              autoComplete="off"
-              className={styles.campo}
-            />
-          </div>
-        </div>
+    <section id={ID_INICIO} aria-labelledby="titulo-portada" className={styles.portada}>
+      <IlustracionPeru className={styles.ilustracion} />
+      <div className={styles.contenido}>
+        <span className={styles.antetitulo}>Elecciones Municipales 2026</span>
+        <h1 id="titulo-portada" className={styles.titulo}>
+          ¿Quién <span className={styles.resaltado}>ganó</span>?
+        </h1>
+        <p className={styles.bajada}>
+          Solo el ganador, o quiénes pasan a segunda vuelta, en tu región, provincia y distrito.
+        </p>
+        <a href={`#${ID_RESULTADOS}`} className={styles.verResultados}>
+          Ver resultados <span aria-hidden="true">↓</span>
+        </a>
       </div>
-    </header>
+    </section>
   );
 }
