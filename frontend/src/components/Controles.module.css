@@ -1,38 +1,32 @@
-.filtro {
+.filtro,
+.orden {
   display: flex;
   flex-wrap: wrap;
+  align-items: center;
   gap: 4px;
   padding: 4px;
-  border-radius: 99px;
-  background: var(--celeste);
+  border: 1px solid var(--borde-suave);
+  /* Como píldora en una línea; si los botones pasan a dos líneas (móvil) no se deforma en óvalo. */
+  border-radius: 26px;
+  background: var(--superficie);
 }
 
-.opcionFiltro,
-.opcionOrden {
+.opcion {
   display: inline-flex;
   align-items: center;
   gap: 8px;
   min-height: 42px;
   padding: 9px 16px;
+  border: 0;
   border-radius: 99px;
+  background: transparent;
+  color: var(--marino);
   font-size: 14px;
   font-weight: 600;
   cursor: pointer;
-  color: var(--marino);
 }
 
-.opcionFiltro {
-  border: 0;
-  background: transparent;
-}
-
-.opcionOrden {
-  border: 1.5px solid var(--marino);
-  background: var(--superficie);
-}
-
-.opcionFiltro[aria-pressed="true"],
-.opcionOrden[aria-pressed="true"] {
+.opcion[aria-pressed="true"] {
   background: var(--marino);
   color: #fff;
 }
@@ -41,21 +35,19 @@
   min-width: 14px;
   padding: 0 8px;
   border-radius: 99px;
-  background: var(--superficie);
+  background: var(--celeste);
   color: var(--marino);
   font-size: 13px;
   font-weight: 800;
   text-align: center;
 }
 
-.orden {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 8px;
+.opcion[aria-pressed="true"] .conteo {
+  background: var(--superficie);
 }
 
 .etiquetaOrden {
+  padding: 0 8px 0 12px;
   font-size: 12px;
   font-weight: 700;
   letter-spacing: 0.08em;

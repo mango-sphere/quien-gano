@@ -69,16 +69,17 @@ export function PantallaResultados({ vista, regionesMapa, estadoDatos }: Props) 
 
         {vista.destacada && <BoletaResultado {...vista.destacada} variante="destacada" />}
 
-        <RankingPartidos filas={filas} ambito={vista.ambito} unidad={unidad}>
-          {vista.conFiltro && <FiltroEstado valor={filtro} onCambiar={setFiltro} conteos={conteos} />}
-        </RankingPartidos>
+        <RankingPartidos filas={filas} ambito={vista.ambito} unidad={unidad} />
 
         <div className={styles.cabeceraLista}>
           <h3 className={styles.tituloLista}>
             {vista.tituloLista}{" "}
             <span className={styles.cantidad}>· {pluralizar(visibles.length, unidad.singular, unidad.plural)}</span>
           </h3>
-          <SelectorOrden valor={orden} onCambiar={setOrden} />
+          <div className={styles.controles}>
+            {vista.conFiltro && <FiltroEstado valor={filtro} onCambiar={setFiltro} conteos={conteos} />}
+            <SelectorOrden valor={orden} onCambiar={setOrden} />
+          </div>
         </div>
 
         {visibles.length > 0 ? (
