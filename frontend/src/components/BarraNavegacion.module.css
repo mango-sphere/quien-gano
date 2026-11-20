@@ -1,0 +1,80 @@
+.barra {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: var(--marino);
+  color: #fff;
+  box-shadow: 0 2px 12px #00386b33;
+}
+
+.barra :focus-visible {
+  outline-color: var(--amarillo);
+}
+
+.contenedor {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px 28px;
+  max-width: var(--ancho-max);
+  margin: 0 auto;
+  padding: 10px var(--margen-lateral);
+}
+
+.marca {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  white-space: nowrap;
+  color: #fff;
+  font-size: 19px;
+  font-weight: 800;
+  text-decoration: none;
+}
+
+.marca:hover {
+  color: #fff;
+}
+
+.resaltado {
+  padding: 0 8px;
+  border-radius: 6px;
+  background: var(--amarillo);
+  color: var(--marino);
+}
+
+.estadoDatos {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 6px 12px;
+  border-radius: 99px;
+  background: var(--verde-datos);
+  color: var(--marino);
+  font-size: 12px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.punto {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--marino);
+}
+
+/* En pantallas angostas el estado se abrevia ("ONPE · 16 nov. 2026 · v0.1.0") para que la barra quepa en una línea. */
+@media (max-width: 480px) {
+  .contenedor {
+    column-gap: 10px;
+  }
+
+  .marca {
+    font-size: 17px;
+  }
+
+  .prescindible {
+    display: none;
+  }
+}

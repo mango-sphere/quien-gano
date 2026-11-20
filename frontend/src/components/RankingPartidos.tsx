@@ -1,4 +1,4 @@
-import { useId, type ReactNode } from "react";
+import { useId } from "react";
 
 import { pluralizar } from "@/lib/texto";
 import type { Candidato } from "@/lib/tipos";
@@ -11,12 +11,15 @@ type Props = {
   filas: Fila[];
   ambito: string;
   unidad: Unidad;
-  /** Controles que van junto al título (el filtro, a nivel nacional). */
-  children?: ReactNode;
 };
 
 type Liderazgo = { lider: Candidato; cantidad: number };
 
+/** Tonos de los tramos por posición; del 5.º en adelante se repite el último. */
+const TONOS = ["#00386b", "#2f6fb8", "#7fa8d8", "#a9c4e6"];
+const TONO_OTROS = "#c9d2de";
+
+/** Cuántos lugares lidera cada partido: el que va primero, gane directo o vaya a segunda vuelta. */
 function contarLiderazgos(filas: Fila[]): Liderazgo[] {
   const porPartido = new Map<string, Liderazgo>();
   for (const { resultado } of filas) {
@@ -28,10 +31,15 @@ function contarLiderazgos(filas: Fila[]): Liderazgo[] {
   );
 }
 
-export function RankingPartidos({ filas, ambito, unidad, children }: Props) {
-  const liderazgos = contarLiderazgos(filas);
-  const maximo = liderazgos[0]?.cantidad ?? 1;
+export function RankingPartidos({ filas, ambito, unidad }: Props) {
   const idTitulo = useId();
+  const liderazgos = contarLiderazgos(filas);
+  const destacados = liderazgos
+    .filter((l) => l.cantidad >= 2)
+    .map((l, i) => ({ ...l, tono: TONOS[Math.min(i, TONOS.length - 1)] }));
+  const enUno = liderazgos.filter((l) => l.cantidad === 1);
+  const otros = `${unidad.singular === "distrito" ? "Otros" : "Otras"} ${unidad.plural}`;
+  const lugares = (n: number) => pluralizar(n, unidad.singular, unidad.plural);
 
   return (
     <section className={styles.ranking} aria-labelledby={idTitulo}>
@@ -39,28 +47,78 @@ export function RankingPartidos({ filas, ambito, unidad, children }: Props) {
         <h3 id={idTitulo} className={styles.titulo}>
           Quién lidera en {ambito}
         </h3>
-        {children}
+        <span className={styles.nota}>{lugares(filas.length)}</span>
       </div>
-      <ul className={styles.lista}>
-        {liderazgos.map(({ lider, cantidad }) => (
-          <li key={lider.party} className={styles.partido}>
-            <span className={styles.logo}>
-              <LogoPartido candidato={lider} tamano={44} />
+
+      <div className={styles.etiquetas}>
+        {destacados.map(({ lider, cantidad, tono }) => (
+          <div key={lider.party} className={styles.etiqueta} style={{ flex: `${cantidad} 1 0` }}>
+            <span className={styles.logoGrande}>
+              <LogoPartido candidato={lider} tamano={32} />
             </span>
-            <div className={styles.datos}>
-              <div className={styles.textos}>
-                <span className={styles.nombre}>{lider.party}</span>
-                <span className={styles.cantidad}>
-                  lidera en {pluralizar(cantidad, unidad.singular, unidad.plural)}
-                </span>
-              </div>
-              <div className={styles.barra} aria-hidden="true">
-                <div className={styles.relleno} style={{ width: `${(cantidad / maximo) * 100}%` }} />
-              </div>
-            </div>
-          </li>
+            <Conteo nombre={lider.party} cantidad={cantidad} tono={tono} />
+          </div>
         ))}
-      </ul>
+        {enUno.length > 0 && (
+          <div className={styles.etiqueta} style={{ flex: `${enUno.length} 1 0` }}>
+            <Conteo nombre={otros} cantidad={enUno.length} tono={TONO_OTROS} />
+          </div>
+        )}
+      </div>
+
+      <div
+        role="img"
+        aria-label={liderazgos.map((l) => `${l.lider.party} ${l.cantidad}`).join(", ")}
+        className={styles.barra}
+      >
+        {destacados.map(({ lider, cantidad, tono }) => (
+          <div
+            key={lider.party}
+            title={`${lider.party}: lidera en ${lugares(cantidad)}`}
+            className={styles.tramo}
+            style={{ flex: `${cantidad} 1 0`, background: tono }}
+          />
+        ))}
+        {enUno.length > 0 && (
+          <div
+            title={`${otros}: ${enUno.length}`}
+            className={styles.tramo}
+            style={{ flex: `${enUno.length} 1 0`, background: TONO_OTROS }}
+          />
+        )}
+      </div>
+
+      {enUno.length > 0 && (
+        <>
+          <h4 className={styles.subtitulo}>
+            Partidos que lideran en 1 {unidad.singular} ({enUno.length})
+          </h4>
+          <ul className={styles.lista}>
+            {enUno.map(({ lider }) => (
+              <li key={lider.party} className={styles.partido}>
+                <span className={styles.logoChico}>
+                  <LogoPartido candidato={lider} tamano={24} />
+                </span>
+                {lider.party}
+              </li>
+            ))}
+          </ul>
+        </>
+      )}
     </section>
+  );
+}
+
+function Conteo({ nombre, cantidad, tono }: { nombre: string; cantidad: number; tono: string }) {
+  return (
+    <div className={styles.textoEtiqueta}>
+      <span className={styles.nombre} title={nombre}>
+        {nombre}
+      </span>
+      <span className={styles.conteo}>
+        <span className={styles.muestra} style={{ background: tono }} />
+        <span className={styles.numero}>{cantidad}</span>
+      </span>
+    </div>
   );
 }

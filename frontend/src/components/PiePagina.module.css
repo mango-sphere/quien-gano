@@ -1,0 +1,73 @@
+.pie {
+  background: var(--marino);
+  color: #fff;
+}
+
+.pie :focus-visible {
+  outline-color: var(--amarillo);
+}
+
+.contenedor {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 18px 32px;
+  max-width: var(--ancho-max);
+  margin: 0 auto;
+  padding: 28px var(--margen-lateral) 32px;
+}
+
+.textos {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  max-width: 640px;
+}
+
+.autoria {
+  font-size: 15px;
+}
+
+.autoria strong {
+  color: var(--amarillo);
+  font-weight: 800;
+}
+
+.aviso {
+  color: var(--celeste);
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+.aviso a {
+  color: #fff;
+  font-weight: 600;
+  text-underline-offset: 3px;
+}
+
+.github {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 40px;
+  padding: 8px 14px;
+  border: 1px solid #ffffff4d;
+  border-radius: 99px;
+  color: #fff;
+  font-size: 13px;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.github:hover {
+  border-color: #fff;
+  background: #ffffff1a;
+  color: #fff;
+}
+
+.iconoGithub {
+  width: 18px;
+  height: 18px;
+  fill: currentColor;
+}

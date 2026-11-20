@@ -1,6 +1,6 @@
 # Frontend
 
-Página web de **Quién ganó en tu distrito**: muestra quién ganó, o quiénes van a segunda vuelta, en
+Página web de **¿Quién ganó?**: muestra quién ganó, o quiénes van a segunda vuelta, en
 cada región, provincia y distrito del Perú en las ERM 2026. Hecha con Next.js (App Router) y
 pensada para leerse rápido, también por adultos mayores.
 
@@ -45,9 +45,6 @@ src/data/meta.json         proceso, fecha de descarga y fuente
 public/logos/{codigo}.png  logos de los partidos que aparecen
 public/fotos/{hash}.jpg    fotos de los candidatos que aparecen
 ```
-
-`src/data/peru-regiones.json` es el mapa (un path SVG y un centroide por región) y no lo genera el
-script.
 
 ### Actualizar los datos
 
@@ -108,6 +105,8 @@ Los tipos están en `src/lib/tipos.ts`.
 | `src/app/` | Rutas: `/`, `/[region]` y `/[region]/[provincia]`, generadas en el build. |
 | `src/lib/resultados.ts` | Acceso a los datos y árbol región → provincia → distrito. |
 | `src/lib/vista.ts` | Qué muestra cada nivel (título, migas, tarjeta destacada, lista). |
+| `src/app/lugares.json/` | Índice estático de regiones, provincias y distritos para el buscador general. |
+| `src/lib/busqueda.ts` | Búsqueda de lugares (sin mayúsculas ni tildes, los más parecidos primero). |
 | `src/lib/reglas.ts` | Regla de segunda vuelta. |
-| `src/components/` | `Encabezado`, `MapaPeru`, `MigasDePan`, `BoletaResultado`, `Retrato`, `RankingPartidos`, `Controles`… |
+| `src/components/` | `BarraNavegacion`, `Encabezado` (portada con `IlustracionPeru`), `BuscadorLugares`, `MigasDePan`, `BoletaResultado`, `Retrato`, `RankingPartidos`, `Controles`… |
 | `scripts/sincronizar-datos.mts` | Conversión de la salida del scraper al contrato de datos. |

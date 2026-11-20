@@ -33,7 +33,7 @@ export function FiltroEstado({ valor, onCambiar, conteos }: PropsFiltro) {
           type="button"
           aria-pressed={valor === o.valor}
           onClick={() => onCambiar(o.valor)}
-          className={styles.opcionFiltro}
+          className={styles.opcion}
         >
           {o.nombre}
           <span className={styles.conteo}>{conteos[o.valor]}</span>
@@ -61,7 +61,7 @@ export function SelectorOrden({ valor, onCambiar }: PropsOrden) {
           type="button"
           aria-pressed={valor === o.valor}
           onClick={() => onCambiar(o.valor)}
-          className={styles.opcionOrden}
+          className={styles.opcion}
         >
           {o.nombre}
         </button>

@@ -9,7 +9,7 @@ export function MigasDePan({ migas }: { migas: Miga[] }) {
   return (
     <nav aria-label="Ubicación" className={styles.migas}>
       {migas.map((miga, i) => (
-        <Fragment key={miga.nombre}>
+        <Fragment key={i}>
           {i > 0 && (
             <span aria-hidden="true" className={styles.separador}>
               /

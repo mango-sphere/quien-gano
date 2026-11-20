@@ -20,12 +20,19 @@
 }
 
 .cabeceraLista {
+  /* Destino de "Ver resultados": que la barra fija no lo tape. */
+  scroll-margin-top: 70px;
   display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  align-items: center;
+  flex-direction: column;
   gap: 12px;
   margin-top: 6px;
+}
+
+.controles {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
 }
 
 .tituloLista {
@@ -50,6 +57,21 @@
 
 .elemento {
   display: flex;
+  /* Destino del buscador cuando eligen un distrito: que la barra fija no lo tape. */
+  scroll-margin-top: 80px;
+}
+
+.elemento:target > * {
+  animation: resaltar 2.4s ease-out;
+}
+
+@keyframes resaltar {
+  0%,
+  40% {
+    box-shadow:
+      0 0 0 4px var(--amarillo),
+      6px 6px 0 var(--marino);
+  }
 }
 
 .elemento > * {

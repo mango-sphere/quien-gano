@@ -2,7 +2,7 @@ import { version } from "../../package.json";
 
 import { vaASegundaVuelta, type TipoEleccion } from "./reglas";
 import { claves, distritos, metaDatos, provincias, regiones, resultado, rutas } from "./resultados";
-import type { Candidato, Resultado } from "./tipos";
+import type { Resultado } from "./tipos";
 
 export type Fila = {
   lugar: string;
@@ -28,14 +28,6 @@ export type Vista = {
   /** El filtro Todas / Con ganador / Segunda vuelta solo tiene sentido a nivel nacional. */
   conFiltro: boolean;
   filas: Fila[];
-  regionSeleccionada?: string;
-};
-
-export type RegionMapa = {
-  nombre: string;
-  href: string;
-  lider: Candidato;
-  segundaVuelta: boolean;
 };
 
 function fila(lugar: string, clave: string, tipo: TipoEleccion, enlace?: Fila["enlace"]): Fila | null {
@@ -45,13 +37,6 @@ function fila(lugar: string, clave: string, tipo: TipoEleccion, enlace?: Fila["e
 }
 
 const existe = <T>(x: T | null): x is T => x !== null;
-
-export function regionesMapa(): RegionMapa[] {
-  return regiones()
-    .map((region) => fila(region, claves.region(region), "regional"))
-    .filter(existe)
-    .map((f) => ({ nombre: f.lugar, href: rutas.region(f.lugar), lider: f.resultado.a, segundaVuelta: f.segundaVuelta }));
-}
 
 export function vistaNacional(): Vista {
   return {
@@ -90,7 +75,6 @@ export function vistaRegion(region: string): Vista {
         }),
       )
       .filter(existe),
-    regionSeleccionada: region,
   };
 }
 
@@ -111,16 +95,15 @@ export function vistaProvincia(region: string, provincia: string): Vista {
     filas: distritos(region, provincia)
       .map((distrito) => fila(distrito, claves.distrito(region, provincia, distrito), "alcaldia"))
       .filter(existe),
-    regionSeleccionada: region,
   };
 }
 
-/** Fecha de descarga de los datos y versión publicada de la página. */
-export function textoEstadoDatos(): string {
-  const fecha = new Intl.DateTimeFormat("es-PE", {
-    dateStyle: "medium",
-    timeStyle: "short",
-    timeZone: "America/Lima",
-  }).format(new Date(metaDatos.generadoEn));
-  return `Datos ONPE · ${fecha} · v${version}`;
+export type EstadoDatos = { fecha: string; hora: string; version: string };
+
+/** Fecha y hora del corte de datos de la ONPE y versión publicada de la página. */
+export function estadoDatos(): EstadoDatos {
+  const momento = new Date(metaDatos.generadoEn);
+  const formato = (opciones: Intl.DateTimeFormatOptions) =>
+    new Intl.DateTimeFormat("es-PE", { ...opciones, timeZone: "America/Lima" }).format(momento);
+  return { fecha: formato({ dateStyle: "medium" }), hora: formato({ timeStyle: "short" }), version: `v${version}` };
 }
