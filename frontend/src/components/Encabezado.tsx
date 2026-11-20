@@ -10,7 +10,7 @@ export function Encabezado() {
     <section id={ID_INICIO} aria-labelledby="titulo-portada" className={styles.portada}>
       <IlustracionPeru className={styles.ilustracion} />
       <div className={styles.contenido}>
-        <span className={styles.antetitulo}>Elecciones Municipales 2026</span>
+        <span className={styles.antetitulo}>Elecciones Regionales y Municipales 2026</span>
         <h1 id="titulo-portada" className={styles.titulo}>
           ¿Quién <span className={styles.resaltado}>ganó</span>?
         </h1>

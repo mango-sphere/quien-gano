@@ -1,4 +1,3 @@
-import { version } from "../../package.json";
 
 import { vaASegundaVuelta, type TipoEleccion } from "./reglas";
 import { claves, distritos, metaDatos, provincias, regiones, resultado, rutas } from "./resultados";
@@ -98,12 +97,12 @@ export function vistaProvincia(region: string, provincia: string): Vista {
   };
 }
 
-export type EstadoDatos = { fecha: string; hora: string; version: string };
+export type EstadoDatos = { fecha: string; hora: string };
 
-/** Fecha y hora del corte de datos de la ONPE y versión publicada de la página. */
+/** Fecha y hora del corte de datos de la ONPE. */
 export function estadoDatos(): EstadoDatos {
   const momento = new Date(metaDatos.generadoEn);
   const formato = (opciones: Intl.DateTimeFormatOptions) =>
     new Intl.DateTimeFormat("es-PE", { ...opciones, timeZone: "America/Lima" }).format(momento);
-  return { fecha: formato({ dateStyle: "medium" }), hora: formato({ timeStyle: "short" }), version: `v${version}` };
+  return { fecha: formato({ dateStyle: "medium" }), hora: formato({ timeStyle: "short" }) };
 }
