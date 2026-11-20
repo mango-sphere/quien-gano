@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import { Poppins, Space_Mono } from "next/font/google";
+import { PiePagina } from "@/components/PiePagina";
+
 import "./globals.css";
 
 const poppins = Poppins({
@@ -28,7 +30,10 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
     // data-scroll-behavior: Next desactiva el desplazamiento suave al cambiar de página; si no,
     // la nueva página puede quedar a mitad de camino (tapada por la barra fija).
     <html lang="es" data-scroll-behavior="smooth" className={`${poppins.variable} ${spaceMono.variable}`}>
-      <body>{children}</body>
+      <body>
+        {children}
+        <PiePagina />
+      </body>
     </html>
   );
 }
