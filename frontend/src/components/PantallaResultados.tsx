@@ -16,6 +16,8 @@ import { RankingPartidos } from "./RankingPartidos";
 type Props = {
   vista: Vista;
   estadoDatos: EstadoDatos;
+  /** El landing solo va en la página de inicio. */
+  conPortada?: boolean;
 };
 
 const pct = (f: Fila) => parseFloat(f.resultado.a.pct);
@@ -32,12 +34,14 @@ const CUMPLE_FILTRO: Record<Filtro, (f: Fila) => boolean> = {
   vuelta: (f) => f.segundaVuelta,
 };
 
-export function PantallaResultados({ vista, estadoDatos }: Props) {
+export function PantallaResultados({ vista, estadoDatos, conPortada = false }: Props) {
   const [consulta, setConsulta] = useState("");
   const [filtro, setFiltro] = useState<Filtro>("todas");
   const [orden, setOrden] = useState<Orden>("az");
 
   const { filas, unidad } = vista;
+  // Con landing, el <h1> es "¿Quién ganó?"; sin él, el nombre del lugar es el título de la página.
+  const TituloLugar = conPortada ? "h2" : "h1";
   const texto = normalizar(consulta);
   const visibles = filas
     .filter((f) => normalizar(f.lugar).includes(texto) && CUMPLE_FILTRO[filtro](f))
@@ -51,13 +55,13 @@ export function PantallaResultados({ vista, estadoDatos }: Props) {
 
   return (
     <>
-      <BarraNavegacion estadoDatos={estadoDatos} />
-      <Encabezado />
+      <BarraNavegacion estadoDatos={estadoDatos} enInicio={conPortada} />
+      {conPortada && <Encabezado />}
 
       <main className={styles.principal}>
         <div className={styles.ubicacion}>
           <MigasDePan migas={vista.migas} />
-          <h2 className={styles.titulo}>{vista.titulo}</h2>
+          <TituloLugar className={styles.titulo}>{vista.titulo}</TituloLugar>
         </div>
 
         {vista.destacada && <BoletaResultado {...vista.destacada} variante="destacada" />}

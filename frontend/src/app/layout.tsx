@@ -25,7 +25,9 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html lang="es" className={`${poppins.variable} ${spaceMono.variable}`}>
+    // data-scroll-behavior: Next desactiva el desplazamiento suave al cambiar de página; si no,
+    // la nueva página puede quedar a mitad de camino (tapada por la barra fija).
+    <html lang="es" data-scroll-behavior="smooth" className={`${poppins.variable} ${spaceMono.variable}`}>
       <body>{children}</body>
     </html>
   );
