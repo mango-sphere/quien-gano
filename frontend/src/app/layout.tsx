@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Poppins, Space_Mono } from "next/font/google";
+import Script from "next/script";
 import { PiePagina } from "@/components/PiePagina";
 import { DESCRIPCION_SITIO, imagenCompartir, NOMBRE_SITIO, URL_SITIO } from "@/lib/compartir";
 
@@ -16,6 +17,12 @@ const spaceMono = Space_Mono({
   subsets: ["latin"],
   weight: "700",
 });
+
+/**
+ * Cloudflare Web Analytics: cuenta visitas sin cookies ni seguimiento entre sitios. El token solo
+ * existe en el build de GitHub Actions, así que en desarrollo y en túneles no se cuenta nada.
+ */
+const TOKEN_ANALITICA = process.env.NEXT_PUBLIC_CF_BEACON_TOKEN;
 
 const TITULO_INICIO = `${NOMBRE_SITIO} — Elecciones 2026`;
 const IMAGEN_INICIO = imagenCompartir("/", DESCRIPCION_SITIO);
@@ -48,6 +55,14 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       <body>
         {children}
         <PiePagina />
+        {TOKEN_ANALITICA && (
+          <Script
+            src="https://static.cloudflareinsights.com/beacon.min.js"
+            // spa: también cuenta las páginas abiertas con navegación del lado del cliente.
+            data-cf-beacon={JSON.stringify({ token: TOKEN_ANALITICA, spa: true })}
+            strategy="lazyOnload"
+          />
+        )}
       </body>
     </html>
   );
