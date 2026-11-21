@@ -64,8 +64,14 @@ export function provinciaPorSlug(region: string, slug: string): string | undefin
   return provincias(region).find((p) => aSlug(p) === slug);
 }
 
+export function distritoPorSlug(region: string, provincia: string, slug: string): string | undefined {
+  return distritos(region, provincia).find((d) => aSlug(d) === slug);
+}
+
 export const rutas = {
   nacional: () => "/",
   region: (region: string) => `/${aSlug(region)}`,
   provincia: (region: string, provincia: string) => `/${aSlug(region)}/${aSlug(provincia)}`,
+  distrito: (region: string, provincia: string, distrito: string) =>
+    `/${aSlug(region)}/${aSlug(provincia)}/${aSlug(distrito)}`,
 };
