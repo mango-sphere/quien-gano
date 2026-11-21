@@ -1,4 +1,5 @@
 .pie {
+  margin-top: auto;
   background: var(--marino);
   color: #fff;
 }

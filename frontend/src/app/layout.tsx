@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Poppins, Space_Mono } from "next/font/google";
 import { PiePagina } from "@/components/PiePagina";
+import { DESCRIPCION_SITIO, imagenCompartir, NOMBRE_SITIO, URL_SITIO } from "@/lib/compartir";
 
 import "./globals.css";
 
@@ -16,13 +17,27 @@ const spaceMono = Space_Mono({
   weight: "700",
 });
 
+const TITULO_INICIO = `${NOMBRE_SITIO} — Elecciones 2026`;
+const IMAGEN_INICIO = imagenCompartir("/", DESCRIPCION_SITIO);
+
 export const metadata: Metadata = {
+  metadataBase: new URL(URL_SITIO),
   title: {
-    default: "¿Quién ganó? — Elecciones 2026",
-    template: "%s — ¿Quién ganó?",
+    default: TITULO_INICIO,
+    template: `%s — ${NOMBRE_SITIO}`,
   },
-  description:
-    "Resultados de las Elecciones Regionales y Municipales 2026 del Perú: quién ganó o quiénes van a segunda vuelta en tu región, provincia y distrito.",
+  description: DESCRIPCION_SITIO,
+  alternates: { canonical: "/" },
+  openGraph: {
+    title: TITULO_INICIO,
+    description: DESCRIPCION_SITIO,
+    url: "/",
+    siteName: NOMBRE_SITIO,
+    locale: "es_PE",
+    type: "website",
+    images: [IMAGEN_INICIO],
+  },
+  twitter: { card: "summary_large_image", title: TITULO_INICIO, description: DESCRIPCION_SITIO, images: [IMAGEN_INICIO] },
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {

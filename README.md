@@ -9,6 +9,9 @@ con su partido (por logo), su foto y su porcentaje.
 Busca tu región, provincia o distrito y ve de un vistazo quién ganó, qué partidos lideran y
 quiénes pasan a segunda vuelta (en gobiernos regionales, si nadie llega al 30 % de los votos válidos).
 
+Cada región, provincia y distrito tiene su propia página. Se comparte con un toque (WhatsApp o el
+menú del celular) y el enlace muestra en la vista previa al ganador, con su foto y el logo del partido.
+
 ![Portada: «¿Quién ganó?», buscador de lugares y quién lidera en las regiones](image/README/portada-2026-11.webp)
 
 ![Tarjetas de resultados: buscador, filtros y ganadores o segunda vuelta con foto y logo del partido](image/README/tarjetas-2026-11.webp)
@@ -88,6 +91,10 @@ Este proyecto no crea ni modifica resultados: solo los descarga, los ordena y lo
 - Los **logos** de las organizaciones políticas y las **fotos** de los candidatos pertenecen a sus
   respectivos titulares. Se muestran solo con fines informativos y no están cubiertos por la licencia
   de este repositorio.
+
+## Versiones
+
+Lo que cambió en cada versión está en [CHANGELOG.md](CHANGELOG.md).
 
 ## Autoría
 

@@ -1,4 +1,5 @@
 
+import { DESCRIPCION_SITIO, resumenResultado } from "./compartir";
 import { vaASegundaVuelta, type TipoEleccion } from "./reglas";
 import { claves, distritos, metaDatos, provincias, regiones, resultado, rutas } from "./resultados";
 import type { Resultado } from "./tipos";
@@ -16,17 +17,25 @@ export type Miga = { nombre: string; href?: string };
 
 export type Unidad = { singular: string; plural: string };
 
-export type Vista = {
+/** Los lugares de un nivel más abajo (las provincias de una región…), con su ranking de partidos. */
+export type Lista = {
   titulo: string;
-  migas: Miga[];
-  destacada?: Destacada;
-  tituloLista: string;
   unidad: Unidad;
   /** "las regiones", "las provincias de Arequipa"… para "Quién lidera en …". */
   ambito: string;
   /** El filtro Todas / Con ganador / Segunda vuelta solo tiene sentido a nivel nacional. */
   conFiltro: boolean;
   filas: Fila[];
+};
+
+export type Vista = {
+  titulo: string;
+  migas: Miga[];
+  destacada?: Destacada;
+  /** Ausente en un distrito: es el último nivel. */
+  lista?: Lista;
+  /** El resultado en una línea, para la descripción de la vista previa del enlace. */
+  resumen: string;
 };
 
 function fila(lugar: string, clave: string, tipo: TipoEleccion, enlace?: Fila["enlace"]): Fila | null {
@@ -41,18 +50,21 @@ export function vistaNacional(): Vista {
   return {
     titulo: "Todo el Perú",
     migas: [{ nombre: "Todo el Perú" }],
-    tituloLista: "Gobiernos regionales",
-    unidad: { singular: "región", plural: "regiones" },
-    ambito: "las regiones",
-    conFiltro: true,
-    filas: regiones()
-      .map((region) =>
-        fila(region, claves.region(region), "regional", {
-          href: rutas.region(region),
-          texto: `Ver provincias de ${region}`,
-        }),
-      )
-      .filter(existe),
+    resumen: DESCRIPCION_SITIO,
+    lista: {
+      titulo: "Gobiernos regionales",
+      unidad: { singular: "región", plural: "regiones" },
+      ambito: "las regiones",
+      conFiltro: true,
+      filas: regiones()
+        .map((region) =>
+          fila(region, claves.region(region), "regional", {
+            href: rutas.region(region),
+            texto: `Ver provincias de ${region}`,
+          }),
+        )
+        .filter(existe),
+    },
   };
 }
 
@@ -62,18 +74,21 @@ export function vistaRegion(region: string): Vista {
     titulo: region,
     migas: [{ nombre: "Todo el Perú", href: rutas.nacional() }, { nombre: region }],
     destacada: destacada ? { ...destacada, etiqueta: `Gobierno regional de ${region}` } : undefined,
-    tituloLista: "Alcaldías provinciales",
-    unidad: { singular: "provincia", plural: "provincias" },
-    ambito: `las provincias de ${region}`,
-    conFiltro: false,
-    filas: provincias(region)
-      .map((provincia) =>
-        fila(provincia, claves.provincia(region, provincia), "alcaldia", {
-          href: rutas.provincia(region, provincia),
-          texto: "Ver distritos",
-        }),
-      )
-      .filter(existe),
+    resumen: resumenResultado(destacada ?? undefined, `Gobierno regional de ${region}`),
+    lista: {
+      titulo: "Alcaldías provinciales",
+      unidad: { singular: "provincia", plural: "provincias" },
+      ambito: `las provincias de ${region}`,
+      conFiltro: false,
+      filas: provincias(region)
+        .map((provincia) =>
+          fila(provincia, claves.provincia(region, provincia), "alcaldia", {
+            href: rutas.provincia(region, provincia),
+            texto: "Ver distritos",
+          }),
+        )
+        .filter(existe),
+    },
   };
 }
 
@@ -87,13 +102,39 @@ export function vistaProvincia(region: string, provincia: string): Vista {
       { nombre: provincia },
     ],
     destacada: destacada ? { ...destacada, etiqueta: `Alcaldía provincial de ${provincia}` } : undefined,
-    tituloLista: "Alcaldías distritales",
-    unidad: { singular: "distrito", plural: "distritos" },
-    ambito: `los distritos de ${provincia}`,
-    conFiltro: false,
-    filas: distritos(region, provincia)
-      .map((distrito) => fila(distrito, claves.distrito(region, provincia, distrito), "alcaldia"))
-      .filter(existe),
+    resumen: resumenResultado(destacada ?? undefined, `Alcaldía provincial de ${provincia}`),
+    lista: {
+      titulo: "Alcaldías distritales",
+      unidad: { singular: "distrito", plural: "distritos" },
+      ambito: `los distritos de ${provincia}`,
+      conFiltro: false,
+      filas: distritos(region, provincia)
+        .map((distrito) =>
+          fila(distrito, claves.distrito(region, provincia, distrito), "alcaldia", {
+            href: rutas.distrito(region, provincia, distrito),
+            texto: "Ver distrito",
+          }),
+        )
+        .filter(existe),
+    },
+  };
+}
+
+export function vistaDistrito(region: string, provincia: string, distrito: string): Vista {
+  const destacada = fila(distrito, claves.distrito(region, provincia, distrito), "alcaldia", {
+    href: rutas.provincia(region, provincia),
+    texto: `Ver los demás distritos de ${provincia}`,
+  });
+  return {
+    titulo: distrito,
+    migas: [
+      { nombre: "Todo el Perú", href: rutas.nacional() },
+      { nombre: region, href: rutas.region(region) },
+      { nombre: provincia, href: rutas.provincia(region, provincia) },
+      { nombre: distrito },
+    ],
+    destacada: destacada ? { ...destacada, etiqueta: `Alcaldía distrital de ${distrito}` } : undefined,
+    resumen: resumenResultado(destacada ?? undefined, `Alcaldía distrital de ${distrito}`),
   };
 }
 
