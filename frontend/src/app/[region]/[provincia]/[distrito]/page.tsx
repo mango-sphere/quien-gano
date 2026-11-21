@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 
 import { PantallaResultados } from "@/components/PantallaResultados";
-import { metadatosPagina, resumenResultado } from "@/lib/compartir";
+import { metadatosPagina } from "@/lib/compartir";
 import { distritoPorSlug, distritos, provinciaPorSlug, provincias, regionPorSlug, regiones, rutas } from "@/lib/resultados";
 import { aSlug } from "@/lib/texto";
 import { estadoDatos, vistaDistrito } from "@/lib/vista";
@@ -33,10 +33,9 @@ export async function generateMetadata({ params }: PageProps<"/[region]/[provinc
   const lugar = await buscar(params);
   if (!lugar) return { title: "Distrito no encontrado" };
   const { region, provincia, distrito } = lugar;
-  const fila = vistaDistrito(region, provincia, distrito).destacada;
   return metadatosPagina(
     `${distrito}, ${provincia}`,
-    resumenResultado(fila, `Alcaldía distrital de ${distrito}`),
+    vistaDistrito(region, provincia, distrito).resumen,
     rutas.distrito(region, provincia, distrito),
   );
 }

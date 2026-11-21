@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 
 import { PantallaResultados } from "@/components/PantallaResultados";
-import { metadatosPagina, resumenResultado } from "@/lib/compartir";
+import { metadatosPagina } from "@/lib/compartir";
 import { regionPorSlug, regiones, rutas } from "@/lib/resultados";
 import { aSlug } from "@/lib/texto";
 import { estadoDatos, vistaRegion } from "@/lib/vista";
@@ -14,8 +14,7 @@ export function generateStaticParams() {
 export async function generateMetadata({ params }: PageProps<"/[region]">): Promise<Metadata> {
   const region = regionPorSlug((await params).region);
   if (!region) return { title: "Región no encontrada" };
-  const fila = vistaRegion(region).destacada;
-  return metadatosPagina(region, resumenResultado(fila, `Gobierno regional de ${region}`), rutas.region(region));
+  return metadatosPagina(region, vistaRegion(region).resumen, rutas.region(region));
 }
 
 export default async function Page({ params }: PageProps<"/[region]">) {

@@ -26,7 +26,7 @@ export const DESCRIPCION_SITIO =
 
 const porcentaje = (pct: string) => `${pct} %`;
 
-/** Una línea con el resultado, para la descripción del enlace compartido. */
+/** Una línea con el resultado: descripción de la vista previa y texto del botón de compartir. */
 export function resumenResultado(fila: Fila | undefined, cargo: string): string {
   if (!fila) return `Todavía no hay datos de ${cargo}.`;
   const { a, b } = fila.resultado;

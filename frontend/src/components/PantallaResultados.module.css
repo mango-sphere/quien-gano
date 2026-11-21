@@ -14,6 +14,14 @@
   gap: 6px;
 }
 
+.filaTitulo {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px 24px;
+}
+
 .titulo {
   font-weight: 800;
   font-size: clamp(31px, 4.7vw, 50px);

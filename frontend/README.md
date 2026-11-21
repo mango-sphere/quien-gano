@@ -111,7 +111,7 @@ Los tipos están en `src/lib/tipos.ts`.
 | `src/app/lugares.json/` | Índice estático de regiones, provincias y distritos para el buscador general. |
 | `src/lib/busqueda.ts` | Búsqueda de lugares (sin mayúsculas ni tildes, los más parecidos primero). |
 | `src/lib/reglas.ts` | Regla de segunda vuelta. |
-| `src/components/` | `BarraNavegacion`, `Encabezado` (portada con `IlustracionPeru`), `BuscadorLugares`, `MigasDePan`, `BoletaResultado`, `Retrato`, `RankingPartidos`, `Controles`, `PiePagina`… |
+| `src/components/` | `BarraNavegacion`, `Encabezado` (portada con `IlustracionPeru`), `BuscadorLugares`, `MigasDePan`, `BoletaResultado`, `Retrato`, `RankingPartidos`, `Controles`, `BotonesCompartir`, `PiePagina`… |
 | `scripts/sincronizar-datos.mts` | Conversión de la salida del scraper al contrato de datos. |
 
 ## Vista previa al compartir (Open Graph)

@@ -1,0 +1,49 @@
+.botones {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+}
+
+.boton {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 40px;
+  padding: 8px 16px;
+  border: 2px solid var(--marino);
+  border-radius: 99px;
+  background: var(--superficie);
+  color: var(--marino);
+  font: inherit;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.boton:hover {
+  background: var(--celeste);
+}
+
+.whatsapp {
+  border-color: #1a7f45;
+  background: #1a7f45;
+  color: #fff;
+}
+
+.whatsapp:hover {
+  background: #146637;
+}
+
+.icono {
+  width: 18px;
+  height: 18px;
+  fill: currentColor;
+}
+
+.aviso {
+  width: 100%;
+  color: var(--ganador-texto);
+  font-size: 14px;
+  font-weight: 600;
+}

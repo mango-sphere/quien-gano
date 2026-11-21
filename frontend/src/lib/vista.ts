@@ -1,4 +1,5 @@
 
+import { DESCRIPCION_SITIO, resumenResultado } from "./compartir";
 import { vaASegundaVuelta, type TipoEleccion } from "./reglas";
 import { claves, distritos, metaDatos, provincias, regiones, resultado, rutas } from "./resultados";
 import type { Resultado } from "./tipos";
@@ -33,6 +34,8 @@ export type Vista = {
   destacada?: Destacada;
   /** Ausente en un distrito: es el último nivel. */
   lista?: Lista;
+  /** El resultado en una línea, para la vista previa y el botón de compartir. */
+  resumen: string;
 };
 
 function fila(lugar: string, clave: string, tipo: TipoEleccion, enlace?: Fila["enlace"]): Fila | null {
@@ -47,6 +50,7 @@ export function vistaNacional(): Vista {
   return {
     titulo: "Todo el Perú",
     migas: [{ nombre: "Todo el Perú" }],
+    resumen: DESCRIPCION_SITIO,
     lista: {
       titulo: "Gobiernos regionales",
       unidad: { singular: "región", plural: "regiones" },
@@ -70,6 +74,7 @@ export function vistaRegion(region: string): Vista {
     titulo: region,
     migas: [{ nombre: "Todo el Perú", href: rutas.nacional() }, { nombre: region }],
     destacada: destacada ? { ...destacada, etiqueta: `Gobierno regional de ${region}` } : undefined,
+    resumen: resumenResultado(destacada ?? undefined, `Gobierno regional de ${region}`),
     lista: {
       titulo: "Alcaldías provinciales",
       unidad: { singular: "provincia", plural: "provincias" },
@@ -97,6 +102,7 @@ export function vistaProvincia(region: string, provincia: string): Vista {
       { nombre: provincia },
     ],
     destacada: destacada ? { ...destacada, etiqueta: `Alcaldía provincial de ${provincia}` } : undefined,
+    resumen: resumenResultado(destacada ?? undefined, `Alcaldía provincial de ${provincia}`),
     lista: {
       titulo: "Alcaldías distritales",
       unidad: { singular: "distrito", plural: "distritos" },
@@ -128,6 +134,7 @@ export function vistaDistrito(region: string, provincia: string, distrito: strin
       { nombre: distrito },
     ],
     destacada: destacada ? { ...destacada, etiqueta: `Alcaldía distrital de ${distrito}` } : undefined,
+    resumen: resumenResultado(destacada ?? undefined, `Alcaldía distrital de ${distrito}`),
   };
 }
 

@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 
 import { PantallaResultados } from "@/components/PantallaResultados";
-import { metadatosPagina, resumenResultado } from "@/lib/compartir";
+import { metadatosPagina } from "@/lib/compartir";
 import { provinciaPorSlug, provincias, regionPorSlug, regiones, rutas } from "@/lib/resultados";
 import { aSlug } from "@/lib/texto";
 import { estadoDatos, vistaProvincia } from "@/lib/vista";
@@ -24,10 +24,9 @@ export async function generateMetadata({ params }: PageProps<"/[region]/[provinc
   const lugar = await buscar(params);
   if (!lugar) return { title: "Provincia no encontrada" };
   const { region, provincia } = lugar;
-  const fila = vistaProvincia(region, provincia).destacada;
   return metadatosPagina(
     `${provincia}, ${region}`,
-    resumenResultado(fila, `Alcaldía provincial de ${provincia}`),
+    vistaProvincia(region, provincia).resumen,
     rutas.provincia(region, provincia),
   );
 }

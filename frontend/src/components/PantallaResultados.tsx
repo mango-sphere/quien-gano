@@ -2,6 +2,7 @@ import type { EstadoDatos, Vista } from "@/lib/vista";
 
 import { BarraNavegacion } from "./BarraNavegacion";
 import { BoletaResultado } from "./BoletaResultado";
+import { BotonesCompartir } from "./BotonesCompartir";
 import { BuscadorLugares } from "./BuscadorLugares";
 import { Encabezado } from "./Encabezado";
 import { ListaResultados } from "./ListaResultados";
@@ -27,7 +28,10 @@ export function PantallaResultados({ vista, estadoDatos, conPortada = false }: P
       <main className={styles.principal}>
         <div className={styles.ubicacion}>
           <MigasDePan migas={vista.migas} />
-          <TituloLugar className={styles.titulo}>{vista.titulo}</TituloLugar>
+          <div className={styles.filaTitulo}>
+            <TituloLugar className={styles.titulo}>{vista.titulo}</TituloLugar>
+            <BotonesCompartir texto={vista.resumen} />
+          </div>
         </div>
 
         {vista.destacada && <BoletaResultado {...vista.destacada} variante="destacada" />}
