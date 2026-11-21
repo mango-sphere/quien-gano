@@ -68,6 +68,13 @@ Para que el deploy funcione, en *Settings → Pages* del repositorio la fuente d
 Para usar un subdominio, configúralo en esa misma pantalla y crea en tu DNS un registro `CNAME` que
 apunte a `<usuario>.github.io`.
 
+### Analítica
+
+Las visitas se cuentan con [Cloudflare Web Analytics](https://www.cloudflare.com/web-analytics/):
+sin cookies y sin seguimiento entre sitios. El token del sitio va en el secreto `CF_BEACON_TOKEN`
+del repositorio (*Settings → Secrets and variables → Actions*) y el deploy lo pasa al build como
+`NEXT_PUBLIC_CF_BEACON_TOKEN`. Sin token (en desarrollo, en un fork) el script no se carga.
+
 ## Datos y fuentes
 
 Toda la información viene de **fuentes públicas y oficiales del Estado peruano**:
