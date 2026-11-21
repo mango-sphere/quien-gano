@@ -58,6 +58,8 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         {TOKEN_ANALITICA && (
           <Script
             src="https://static.cloudflareinsights.com/beacon.min.js"
+            // Igual que el fragmento que da Cloudflare.
+            type="module"
             // spa: también cuenta las páginas abiertas con navegación del lado del cliente.
             data-cf-beacon={JSON.stringify({ token: TOKEN_ANALITICA, spa: true })}
             strategy="lazyOnload"
