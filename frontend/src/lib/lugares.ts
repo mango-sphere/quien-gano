@@ -1,7 +1,7 @@
-import { idTarjeta, type Lugar } from "./busqueda";
+import type { Lugar } from "./busqueda";
 import { distritos, provincias, regiones, rutas } from "./resultados";
 
-/** Todas las regiones, provincias y distritos. Los distritos no tienen página: llevan a su tarjeta. */
+/** Todas las regiones, provincias y distritos, cada uno con el enlace a su página. */
 export function indiceLugares(): Lugar[] {
   return regiones().flatMap((region) => [
     { nombre: region, tipo: "región" as const, href: `${rutas.region(region)}/` },
@@ -11,7 +11,7 @@ export function indiceLugares(): Lugar[] {
         nombre: distrito,
         tipo: "distrito" as const,
         ubicacion: `${provincia}, ${region}`,
-        href: `${rutas.provincia(region, provincia)}/#${idTarjeta(distrito)}`,
+        href: `${rutas.distrito(region, provincia, distrito)}/`,
       })),
     ]),
   ]);

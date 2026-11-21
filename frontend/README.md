@@ -18,10 +18,13 @@ npm run dev
 Abre <http://localhost:3000>. Los datos ya vienen en el repo, así que no hace falta correr el scraper
 para ver la página.
 
+La versión del proyecto está en `version` de `package.json`: súbela antes de publicar un cambio
+visible y anota qué cambió en el [CHANGELOG.md](../CHANGELOG.md) de la raíz.
+
 | Comando | Qué hace |
 |---|---|
 | `npm run dev` | Servidor de desarrollo. |
-| `npm run build` | Genera el sitio estático en `out/`: 222 páginas (nacional, 25 regiones y 196 provincias). |
+| `npm run build` | Genera el sitio estático en `out/`: 1918 páginas (nacional, 25 regiones, 196 provincias y 1696 distritos), sus imágenes para compartir y `lugares.json`, el índice del buscador. Pesa unos 400 MB, la mitad son las imágenes. |
 | `npm run lint` | ESLint. |
 | `npm run sincronizar-datos` | Actualiza los datos a partir de la salida del scraper (ver abajo). |
 
@@ -102,11 +105,36 @@ Los tipos están en `src/lib/tipos.ts`.
 
 | Ruta | Qué es |
 |---|---|
-| `src/app/` | Rutas: `/`, `/[region]` y `/[region]/[provincia]`, generadas en el build. |
+| `src/app/` | Rutas: `/`, `/[region]`, `/[region]/[provincia]` y `/[region]/[provincia]/[distrito]`, generadas en el build. |
 | `src/lib/resultados.ts` | Acceso a los datos y árbol región → provincia → distrito. |
-| `src/lib/vista.ts` | Qué muestra cada nivel (título, migas, tarjeta destacada, lista). |
+| `src/lib/vista.ts` | Qué muestra cada nivel (título, migas, tarjeta destacada y, salvo en el distrito, la lista del nivel de abajo). |
 | `src/app/lugares.json/` | Índice estático de regiones, provincias y distritos para el buscador general. |
 | `src/lib/busqueda.ts` | Búsqueda de lugares (sin mayúsculas ni tildes, los más parecidos primero). |
 | `src/lib/reglas.ts` | Regla de segunda vuelta. |
-| `src/components/` | `BarraNavegacion`, `Encabezado` (portada con `IlustracionPeru`), `BuscadorLugares`, `MigasDePan`, `BoletaResultado`, `Retrato`, `RankingPartidos`, `Controles`… |
+| `src/components/` | `BarraNavegacion`, `Encabezado` (portada con `IlustracionPeru`), `BuscadorLugares`, `MigasDePan`, `BoletaResultado`, `Retrato`, `RankingPartidos`, `Controles`, `BotonesCompartir`, `PiePagina`… |
 | `scripts/sincronizar-datos.mts` | Conversión de la salida del scraper al contrato de datos. |
+
+## Vista previa al compartir (Open Graph)
+
+Cada página tiene su imagen en `compartir.png` (`/compartir.png`, `/cusco/compartir.png`,
+`/arequipa/caylloma/compartir.png`…), generada en el build con `next/og`: la portada muestra el
+resumen nacional; cada región, provincia y distrito, su ganador o los dos que van a segunda vuelta,
+con foto y logo. El título y la descripción salen de `src/lib/compartir.ts`.
+
+| Ruta | Qué es |
+|---|---|
+| `src/app/**/compartir.png/` | Rutas estáticas que generan las 1918 imágenes (1200 × 630). |
+| `src/og/ImagenCompartir.tsx` | Diseño de la imagen. |
+| `src/og/fuentes/` | Poppins y Space Mono en TTF (`next/og` no lee woff2), con su licencia OFL. |
+
+Se usa una ruta propia (`compartir.png`) en lugar de la convención `opengraph-image` porque esa
+genera archivos sin extensión, y GitHub Pages los serviría sin el tipo `image/png`.
+
+La URL de la imagen lleva la fecha de los datos (`compartir.png?v=202611162324`). WhatsApp, Facebook
+y LinkedIn guardan la vista previa por días; al actualizar los datos (por ejemplo, con la segunda
+vuelta) la URL cambia y la toman como una imagen nueva.
+
+El dominio de las URLs completas se toma de `NEXT_PUBLIC_URL_SITIO` (por defecto
+`https://quiengano.mangosphere.tech`). Para revisar cómo se ve un enlace ya publicado:
+[Post Inspector de LinkedIn](https://www.linkedin.com/post-inspector/) o
+[Sharing Debugger de Facebook](https://developers.facebook.com/tools/debug/).

@@ -1,4 +1,4 @@
-import { aSlug, normalizar } from "./texto";
+import { normalizar } from "./texto";
 
 export type TipoLugar = "región" | "provincia" | "distrito";
 
@@ -10,11 +10,6 @@ export type Lugar = {
   ubicacion?: string;
   href: string;
 };
-
-/** Id de la tarjeta de un lugar en la lista, para poder llegar a ella con un ancla. */
-export function idTarjeta(lugar: string): string {
-  return `lugar-${aSlug(lugar)}`;
-}
 
 const ORDEN_TIPO: Record<TipoLugar, number> = { región: 0, provincia: 1, distrito: 2 };
 

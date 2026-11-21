@@ -1,4 +1,5 @@
 .pie {
+  margin-top: auto;
   background: var(--marino);
   color: #fff;
 }
@@ -46,7 +47,19 @@
   text-underline-offset: 3px;
 }
 
-.github {
+.enlaces {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.autoria a {
+  color: #fff;
+  font-weight: 600;
+  text-underline-offset: 3px;
+}
+
+.boton {
   display: inline-flex;
   align-items: center;
   gap: 8px;
@@ -60,13 +73,13 @@
   text-decoration: none;
 }
 
-.github:hover {
+.boton:hover {
   border-color: #fff;
   background: #ffffff1a;
   color: #fff;
 }
 
-.iconoGithub {
+.icono {
   width: 18px;
   height: 18px;
   fill: currentColor;

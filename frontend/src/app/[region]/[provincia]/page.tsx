@@ -2,7 +2,8 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 
 import { PantallaResultados } from "@/components/PantallaResultados";
-import { provinciaPorSlug, provincias, regionPorSlug, regiones } from "@/lib/resultados";
+import { metadatosPagina } from "@/lib/compartir";
+import { provinciaPorSlug, provincias, regionPorSlug, regiones, rutas } from "@/lib/resultados";
 import { aSlug } from "@/lib/texto";
 import { estadoDatos, vistaProvincia } from "@/lib/vista";
 
@@ -21,7 +22,13 @@ async function buscar(params: PageProps<"/[region]/[provincia]">["params"]) {
 
 export async function generateMetadata({ params }: PageProps<"/[region]/[provincia]">): Promise<Metadata> {
   const lugar = await buscar(params);
-  return { title: lugar ? `${lugar.provincia}, ${lugar.region}` : "Provincia no encontrada" };
+  if (!lugar) return { title: "Provincia no encontrada" };
+  const { region, provincia } = lugar;
+  return metadatosPagina(
+    `${provincia}, ${region}`,
+    vistaProvincia(region, provincia).resumen,
+    rutas.provincia(region, provincia),
+  );
 }
 
 export default async function Page({ params }: PageProps<"/[region]/[provincia]">) {

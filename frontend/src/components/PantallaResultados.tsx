@@ -1,19 +1,20 @@
-"use client";
-
-import { useState } from "react";
-
-import { idTarjeta } from "@/lib/busqueda";
-import { pluralizar } from "@/lib/texto";
-import type { EstadoDatos, Fila, Vista } from "@/lib/vista";
+import { rutas } from "@/lib/resultados";
+import type { EstadoDatos, Vista } from "@/lib/vista";
 
 import { BarraNavegacion } from "./BarraNavegacion";
 import { BoletaResultado } from "./BoletaResultado";
+import { BotonesCompartir } from "./BotonesCompartir";
 import { BuscadorLugares } from "./BuscadorLugares";
-import { FiltroEstado, SelectorOrden, type Filtro, type Orden } from "./Controles";
-import { Encabezado, ID_RESULTADOS } from "./Encabezado";
+import { Encabezado } from "./Encabezado";
+import { ListaResultados } from "./ListaResultados";
 import { MigasDePan } from "./MigasDePan";
 import styles from "./PantallaResultados.module.css";
-import { RankingPartidos } from "./RankingPartidos";
+
+/** "Caylloma (Arequipa)", "San Sebastián (Cusco)": con el lugar padre, porque hay nombres repetidos. */
+function lugarParaCompartir(vista: Vista): string {
+  const padre = vista.migas.at(-2);
+  return padre && padre.href !== rutas.nacional() ? `${vista.titulo} (${padre.nombre})` : vista.titulo;
+}
 
 type Props = {
   vista: Vista;
@@ -22,34 +23,9 @@ type Props = {
   conPortada?: boolean;
 };
 
-const pct = (f: Fila) => parseFloat(f.resultado.a.pct);
-
-const COMPARADORES: Record<Orden, (x: Fila, y: Fila) => number> = {
-  az: (x, y) => x.lugar.localeCompare(y.lugar, "es"),
-  mayor: (x, y) => pct(y) - pct(x),
-  menor: (x, y) => pct(x) - pct(y),
-};
-
-const CUMPLE_FILTRO: Record<Filtro, (f: Fila) => boolean> = {
-  todas: () => true,
-  ganador: (f) => !f.segundaVuelta,
-  vuelta: (f) => f.segundaVuelta,
-};
-
 export function PantallaResultados({ vista, estadoDatos, conPortada = false }: Props) {
-  const [filtro, setFiltro] = useState<Filtro>("todas");
-  const [orden, setOrden] = useState<Orden>("az");
-
-  const { filas, unidad } = vista;
   // Con landing, el <h1> es "¿Quién ganó?"; sin él, el nombre del lugar es el título de la página.
   const TituloLugar = conPortada ? "h2" : "h1";
-  const visibles = filas.filter(CUMPLE_FILTRO[filtro]).sort(COMPARADORES[orden]);
-
-  const conteos: Record<Filtro, number> = {
-    todas: filas.length,
-    ganador: filas.filter(CUMPLE_FILTRO.ganador).length,
-    vuelta: filas.filter(CUMPLE_FILTRO.vuelta).length,
-  };
 
   return (
     <>
@@ -59,37 +35,25 @@ export function PantallaResultados({ vista, estadoDatos, conPortada = false }: P
       <main className={styles.principal}>
         <div className={styles.ubicacion}>
           <MigasDePan migas={vista.migas} />
-          <TituloLugar className={styles.titulo}>{vista.titulo}</TituloLugar>
+          <div className={styles.filaTitulo}>
+            <TituloLugar className={styles.titulo}>{vista.titulo}</TituloLugar>
+            <BotonesCompartir lugar={conPortada ? "todo el Perú" : lugarParaCompartir(vista)} />
+          </div>
         </div>
 
         {vista.destacada && <BoletaResultado {...vista.destacada} variante="destacada" />}
 
-        <RankingPartidos filas={filas} ambito={vista.ambito} unidad={unidad} />
-
-        <div id={ID_RESULTADOS} className={styles.cabeceraLista}>
-          <BuscadorLugares variante="lista" />
-          <h3 className={styles.tituloLista}>
-            {vista.tituloLista}{" "}
-            <span className={styles.cantidad}>· {pluralizar(visibles.length, unidad.singular, unidad.plural)}</span>
-          </h3>
-          <div className={styles.controles}>
-            {vista.conFiltro && <FiltroEstado valor={filtro} onCambiar={setFiltro} conteos={conteos} />}
-            <SelectorOrden valor={orden} onCambiar={setOrden} />
-          </div>
-        </div>
-
-        {visibles.length > 0 ? (
-          <ol className={styles.lista}>
-            {visibles.map((f, i) => (
-              <li key={f.lugar} id={idTarjeta(f.lugar)} className={styles.elemento}>
-                <BoletaResultado {...f} variante="fila" numero={i + 1} />
-              </li>
-            ))}
-          </ol>
+        {vista.lista ? (
+          <ListaResultados lista={vista.lista} />
         ) : (
-          <p role="status" className={styles.vacio}>
-            {filas.length > 0 ? "Ningún resultado con ese filtro." : "Sin datos para este lugar todavía."}
-          </p>
+          <>
+            {!vista.destacada && (
+              <p role="status" className={styles.vacio}>
+                Sin datos para este lugar todavía.
+              </p>
+            )}
+            <BuscadorLugares variante="lista" />
+          </>
         )}
       </main>
     </>

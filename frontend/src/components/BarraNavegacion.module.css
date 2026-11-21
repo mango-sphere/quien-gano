@@ -64,7 +64,8 @@
   background: var(--marino);
 }
 
-/* En pantallas angostas el estado se abrevia ("ONPE · 16 nov. 2026 · v0.1.0") para que la barra quepa en una línea. */
+/* En pantallas angostas el estado se abrevia ("ONPE · 16 nov. 2026") y se compacta
+   para que la barra quepa en una línea. */
 @media (max-width: 480px) {
   .contenedor {
     column-gap: 10px;
@@ -74,7 +75,20 @@
     font-size: 17px;
   }
 
+  .estadoDatos {
+    gap: 5px;
+    padding: 5px 10px;
+    font-size: 11px;
+  }
+
   .prescindible {
     display: none;
+  }
+}
+
+/* Android de 360 px: unos píxeles menos en la marca evitan la segunda línea. */
+@media (max-width: 380px) {
+  .marca {
+    font-size: 16px;
   }
 }

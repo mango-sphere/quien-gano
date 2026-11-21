@@ -46,10 +46,7 @@ export function BuscadorLugares({ variante }: Props) {
   function ir(lugar: Lugar) {
     setAbierto(false);
     setConsulta("");
-    // Los distritos llevan a una tarjeta dentro de la página de su provincia: con una navegación
-    // normal el navegador baja hasta el ancla y la marca con :target para resaltarla.
-    if (lugar.tipo === "distrito") window.location.assign(rutaPublica(lugar.href));
-    else router.push(lugar.href);
+    router.push(lugar.href);
   }
 
   function alPresionarTecla(e: KeyboardEvent<HTMLInputElement>) {
