@@ -28,7 +28,8 @@ export function PiePagina() {
               JNE
             </a>
             . La proclamación oficial de los resultados la hace el Jurado
-            Nacional de Elecciones.
+            Nacional de Elecciones. Contamos las visitas con Cloudflare Web
+            Analytics, sin cookies.
           </p>
         </div>
         <div className={styles.enlaces}>

@@ -4,6 +4,16 @@ Los cambios importantes de cada versión de la página. El formato sigue
 [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/) y las versiones siguen
 [versionado semántico](https://semver.org/lang/es/). La versión está en `frontend/package.json`.
 
+## 1.0.0 - 2026-11-21
+
+Primera versión estable: resultados de gobiernos regionales, alcaldías provinciales y distritales,
+buscador, páginas por lugar para compartir y conteo de visitas.
+
+### Agregado
+
+- Conteo de visitas con Cloudflare Web Analytics, sin cookies ni seguimiento entre sitios. Solo se
+  carga en el sitio publicado, y el pie de página lo avisa.
+
 ## 0.3.0 - 2026-11-21
 
 ### Agregado

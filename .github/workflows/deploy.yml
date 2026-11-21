@@ -36,6 +36,8 @@ jobs:
         env:
           # "" con dominio propio; "/quien-gano" mientras se publique en <usuario>.github.io/quien-gano.
           NEXT_PUBLIC_BASE_PATH: ${{ steps.pages.outputs.base_path }}
+          # Cloudflare Web Analytics. No es secreto (queda en el HTML), pero vive en Secrets del repo.
+          NEXT_PUBLIC_CF_BEACON_TOKEN: ${{ secrets.CF_BEACON_TOKEN }}
       - uses: actions/upload-pages-artifact@v4
         with:
           path: frontend/out
