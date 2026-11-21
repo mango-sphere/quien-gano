@@ -19,7 +19,7 @@ Abre <http://localhost:3000>. Los datos ya vienen en el repo, así que no hace f
 para ver la página.
 
 La versión del proyecto está en `version` de `package.json`: súbela antes de publicar un cambio
-visible.
+visible y anota qué cambió en el [CHANGELOG.md](../CHANGELOG.md) de la raíz.
 
 | Comando | Qué hace |
 |---|---|

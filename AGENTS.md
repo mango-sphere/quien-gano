@@ -68,4 +68,5 @@ complejo, plano antes que anidado, y los errores nunca pasan en silencio.
 
 - Flujo: `feat/*` → PR a `develop` (corre el CI) → PR a `main` (publica en GitHub Pages).
 - Mensajes de commit en español, con prefijo convencional: `feat:`, `fix:`, `chore:`, `docs:`, `ci:`…
+- Cada versión nueva (`version` en `frontend/package.json`) se anota en `CHANGELOG.md`.
 - Haz commit, push o abre pull requests solo cuando se pida explícitamente.
