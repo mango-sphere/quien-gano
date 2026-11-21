@@ -34,7 +34,7 @@ export type Vista = {
   destacada?: Destacada;
   /** Ausente en un distrito: es el último nivel. */
   lista?: Lista;
-  /** El resultado en una línea, para la vista previa y el botón de compartir. */
+  /** El resultado en una línea, para la descripción de la vista previa del enlace. */
   resumen: string;
 };
 

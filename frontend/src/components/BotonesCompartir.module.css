@@ -1,4 +1,5 @@
 .botones {
+  position: relative;
   display: flex;
   flex-wrap: wrap;
   align-items: center;
@@ -41,9 +42,16 @@
   fill: currentColor;
 }
 
+/* Fuera del flujo: si ocupara una línea, el grupo crecería y los botones se correrían. */
 .aviso {
-  width: 100%;
+  position: absolute;
+  top: calc(100% + 3px);
+  right: 0;
+  left: 0;
+  margin: 0;
   color: var(--ganador-texto);
-  font-size: 14px;
+  font-size: 13px;
   font-weight: 600;
+  line-height: 1.3;
+  white-space: nowrap;
 }

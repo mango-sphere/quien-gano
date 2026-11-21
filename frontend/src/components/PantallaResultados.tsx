@@ -1,3 +1,4 @@
+import { rutas } from "@/lib/resultados";
 import type { EstadoDatos, Vista } from "@/lib/vista";
 
 import { BarraNavegacion } from "./BarraNavegacion";
@@ -8,6 +9,12 @@ import { Encabezado } from "./Encabezado";
 import { ListaResultados } from "./ListaResultados";
 import { MigasDePan } from "./MigasDePan";
 import styles from "./PantallaResultados.module.css";
+
+/** "Caylloma (Arequipa)", "San Sebastián (Cusco)": con el lugar padre, porque hay nombres repetidos. */
+function lugarParaCompartir(vista: Vista): string {
+  const padre = vista.migas.at(-2);
+  return padre && padre.href !== rutas.nacional() ? `${vista.titulo} (${padre.nombre})` : vista.titulo;
+}
 
 type Props = {
   vista: Vista;
@@ -30,7 +37,7 @@ export function PantallaResultados({ vista, estadoDatos, conPortada = false }: P
           <MigasDePan migas={vista.migas} />
           <div className={styles.filaTitulo}>
             <TituloLugar className={styles.titulo}>{vista.titulo}</TituloLugar>
-            <BotonesCompartir texto={vista.resumen} />
+            <BotonesCompartir lugar={conPortada ? "todo el Perú" : lugarParaCompartir(vista)} />
           </div>
         </div>
 

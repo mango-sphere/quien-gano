@@ -34,15 +34,17 @@ function enlaceActual(): string {
 }
 
 type Props = {
-  /** El resultado en una línea; va junto al enlace. */
-  texto: string;
+  /** "Arequipa", "San Sebastián"…: el mensaje es "Mira quién ganó en <lugar>". */
+  lugar: string;
 };
 
 /**
  * "Compartir" abre el menú del sistema (celular) o copia el enlace (computadora sin ese menú).
  * WhatsApp va aparte porque es por donde más se comparte, también desde la computadora.
  */
-export function BotonesCompartir({ texto }: Props) {
+export function BotonesCompartir({ lugar }: Props) {
+  // Corto a propósito: el resultado ya se ve en la vista previa del enlace.
+  const texto = `Mira quién ganó en ${lugar}`;
   const menuNativo = useSyncExternalStore(
     sinSuscripcion,
     () => typeof navigator.share === "function",
@@ -102,7 +104,7 @@ export function BotonesCompartir({ texto }: Props) {
       </button>
       <p role="status" className={aviso ? styles.aviso : "visualmente-oculto"}>
         {aviso === "copiado" && "¡Enlace copiado!"}
-        {aviso === "error" && "No se pudo compartir. Copia el enlace de la barra del navegador."}
+        {aviso === "error" && "No se pudo copiar el enlace."}
       </p>
     </div>
   );
